@@ -1,0 +1,283 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foro - The Forest Wiki</title>
+    <link rel="shortcut icon" href="{% static 'core/img/favicon/favicon.png' %}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Rationale&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'core/css/foro.css' %}" rel="stylesheet">
+</head>
+<body id="fondo1" style="background-image: url('{% static "core/img/background/Fondo3.jpg" %}');
+        background-size: cover; background-attachment: fixed;">
+<div class="page-wrapper">
+    <!-- Menú de navegación -->
+    <nav class="navbar d-flex justify-content-between align-items-center">
+        <!-- Menú hamburguesa y enlaces -->
+        <div class="nav-left d-flex align-items-center">
+            <!-- Checkbox oculto para el menú hamburguesa -->
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <!-- Botón de menú hamburguesa -->
+            <label for="menu-toggle" class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            <!-- Lista de navegación -->
+            <ul class="nav-list d-flex align-items-center">
+                <li class="menu"><a href="{% url 'home' %}">Inicio</a></li>
+                <li class="menu"><a href="{% url 'external_posts' %}">Comunidad</a></li>
+                <li class="menu"><a href="{% url 'foro' %}">Foro</a></li>
+                <li class="menu">
+                    <a href="https://www.google.com/maps/place/…">Dirección</a>
+                </li>
+                <!-- Si inicio sesion el usuario mostraremos las siguientes categorias -->
+                {% if user.is_authenticated %}
+                    <li class="menu">
+                        <a href="{% url 'micuenta' %}">Mi Cuenta</a>
+                    </li>
+                    <li class="menu">
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-link">Cerrar Sesión</button>
+                        </form>
+                    <!-- Si el usuario es superuser le mostramos esta categoria de administrador -->
+                    {% if user.is_superuser %}
+                        <li class="menu">
+                            <a href="{% url 'ver_cuentas_api' %}">Administrar Cuentas</a>
+                        </li>
+                    {% endif %}
+                    <li class="menu" style="color: #ffc400">
+                        <span>Bienvenido, {{ user.username }}</span>
+                    </li>
+                {% else %}
+                    <li class="menu"><a href="{% url 'registrarse' %}">Registrarse</a></li>
+                    <li class="menu"><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container content mt-5">
+        <h5>¡Comenta respecto al juego!</h5>
+
+        <!-- Formulario de comentarios -->
+        <form method="post" class="form_comentarios mb-4">
+            {% csrf_token %}
+            {{ form.content }}
+            {{ form.parent }}
+            <button type="submit" class="btn btn-primary mt-2">Comentar</button>
+        </form>
+
+        <!-- Listado de comentarios -->
+        {% for c in comentarios %}
+            <div class="media mb-4">
+                <img src="{{ c.usuario.imagen.url }}"
+                     class="me-3 rounded-circle"
+                     width="48" height="48" alt="Avatar">
+                <div class="media-body">
+                    <h6 class="mt-0 d-flex justify-content-between align-items-center">
+                        <span style="color: #ffc400"> {{ c.usuario.username }}<small class="text-muted"> {{ c.created|date:"H:i, d/m/Y" }}</small></span>
+                        <!-- Botón para desplegar respuestas -->
+                        {% if c.replies.count %}
+                            <button class="btn btn-sm btn-outline-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#replies-{{ c.id }}"
+                                    aria-expanded="false"
+                                    aria-controls="replies-{{ c.id }}">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        {% endif %}
+                    </h6>
+
+                    <p style="color: #ffffff">{{ c.content }}</p>
+
+                    <a href="#" 
+                       class="btn btn-success btn-sm me-2 reply-btn" 
+                       data-id="{{ c.id }}">Responder
+                    </a>
+                    {% if c.usuario == request.user or request.user.is_superuser %}
+                        <a href="#"
+                           class="btn btn-primary btn-sm me-2 edit-btn"
+                           data-id="{{ c.id }}"
+                           data-content="{{ c.content|escapejs }}"
+                           data-url="{% url 'comment_edit' c.id %}"
+                           data-parent="">
+                            Editar
+                        </a>
+                        <a href="{% url 'comment_delete' c.id %}"
+                           class="btn btn-danger btn-sm delete-btn">
+                            Borrar
+                        </a>
+                    {% endif %}
+
+                    {# Formulario de respuesta inline (oculto) #}
+                    <form method="post" class="reply-form mt-2 mb-2" id="reply-{{ c.id }}" style="display:none;">
+                        {% csrf_token %}
+                        <textarea name="content" class="form-control" rows="2" placeholder="Tu respuesta…"></textarea>
+                        <input type="hidden" name="parent" value="{{ c.id }}">
+                        <button type="submit" class="btn btn-sm btn-secondary mt-1">
+                            Enviar respuesta
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Respuestas de un comentario -->
+            <div class="collapse ps-5 mb-3" id="replies-{{ c.id }}">
+                {% for r in c.replies.all %}
+                    <div class="media mb-3">
+                        <img src="{{ r.usuario.imagen.url }}"
+                             class="me-3 rounded-circle"
+                             width="48" height="48" alt="Avatar">
+                        <div class="media-body">
+                            <h6 class="mt-0" style="color: #ffc400">
+                                {{ r.usuario.username }}
+                                <small class="text-muted">
+                                    {{ r.created|date:"H:i, d/m/Y" }}
+                                </small>
+                            </h6>
+                            <p style="color: #ffffff">{{ r.content }}</p>
+                            {% if r.usuario == request.user or request.user.is_superuser %}
+                                <a href="#"
+                                   class="btn btn-primary btn-sm me-2 edit-btn"
+                                   data-id="{{ r.id }}"
+                                   data-content="{{ r.content|escapejs }}"
+                                   data-url="{% url 'comment_edit' r.id %}"
+                                   data-parent="{{ r.parent.id }}">
+                                    Editar
+                                </a>
+                                <a href="{% url 'comment_delete' r.id %}"
+                                   class="btn btn-danger btn-sm delete-btn">
+                                    Borrar
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-white">No hay respuestas aún.</p>
+                {% endfor %}
+            </div>
+            <!-- Mostrar la cantidad de respuestas de un comentario -->
+            <p class="text-white">
+                {{ c.replies.count }} {{ c.replies.count|pluralize:"respuesta,respuestas" }}
+                {% empty %}
+            <p class="text-white">No hay comentarios todavía. ¡Sé el primero!</p>
+        {% endfor %}
+    </div>
+
+    <!-- Modal para editar respuesta -->
+    <div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="editCommentForm" method="post" action="">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCommentLabel">Editar comentario</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea name="content" id="editContent" class="form-control" rows="4"></textarea>
+                        <input type="hidden" name="parent" id="editParent">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de página (Usamos Bootstrap para la responsividad) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Columna Izquierda -->
+                <div class="col-md-6 text-center text-md-start">
+                    <div class="footer-brand">
+                        <span>The Forest Wiki</span>
+                    </div>
+                    <p class="footer-text">
+                        Recopilando información esencial desde 2025.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <!-- Columna Derecha -->
+                <div class="col-md-6 d-flex justify-content-center justify-content-md-end">
+                    <ul class="footer-links">
+                        <li><a href="#">Inicio</a></li>
+                        <!--<li><a href="{% url 'error_404' %}">Categorías</a></li>-->
+                        <li>
+                            <a href="https://www.google.com/maps/place/R%C3%ADo+Imperial+460,+Valle+Grande,+Lampa,+Regi%C3%B3n+Metropolitana/@-33.3295809,-70.751195,17z/data=!3m1!4b1!4m5!3m4!1s0x9662bf62531dc747:0xc0b4aee73c3b9373!8m2!3d-33.3295854!4d-70.7490063?hl=es-CL">Dirección</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright text-center">
+                © 2025 The Forest Wiki. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Maneja la vision de las respuestas
+    document.querySelectorAll('.reply-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            const f = document.getElementById('reply-' + btn.dataset.id);
+            f.style.display = (f.style.display === 'none') ? 'block' : 'none';
+        });
+    });
+
+    // Modal para poder editar un comentario
+    const form = document.getElementById('editCommentForm');
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            // URL ya viene completa
+            form.action = btn.dataset.url;
+            // contenido
+            document.getElementById('editContent').value = btn.dataset.content;
+            // parent (puede ser "" o un número)
+            document.getElementById('editParent').value = btn.dataset.parent;
+            new bootstrap.Modal(document.getElementById('editCommentModal')).show();
+        });
+    });
+    // SweetAlert2 para confirmar borrado (comentarios y respuestas)
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const url = this.getAttribute('href');
+
+            Swal.fire({
+                title: '¿Estás segura/o?',
+                text: "Esto eliminará el comentario permanentemente.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, borrar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+/* 
+=============================
+ Diseño General de la pagina
+=============================
+*/
+html, body {
+    font-family: "Rationale", sans-serif;
+    font-size: 1.15em;
+    font-weight: 500;
+    font-style: normal;
+    background: linear-gradient(90deg, #013003, #031309, #020703);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    min-height: 100vh;
+    overflow-x: hidden; /* Evita el que la pagina no aumente su tamaño horizontalmente */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box; /* Incluye el padding y el border */
+    position: relative;
+    scroll-behavior: smooth; /* Hace que el desplazamiento sea muy suave */
+}
+
+body.modal-open {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+}
+
+/*
+============================
+ Diseño de la barra lateral
+============================
+*/
+
+/* Para navegadores basados en WebKit (Chrome, Safari, Opera) */
+::-webkit-scrollbar {
+    width: 6px;  /* Ancho de la barra vertical, "finita" */
+    height: 6px; /* Alto de la barra horizontal */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* Sin fondo blanco */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: gold; /* Color naranja */
+    border-radius: 10px;
+    border: none;
+}
+
+/* Para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: gold transparent;
+}
+
+/* 
+=======================================
+ Diseño general del menu de navegación
+=======================================
+*/
+
+/* Navegación */
+.menu-toggle {
+    display: none;
+}
+
+/* Estilo del icono del menu en la esquina izquierda */
+.menu-icon {
+    display: block;
+    position: fixed;
+    top: 13px;
+    left: 13px; /* Poscicion del icono hacia la izquierda */
+    width: 33px;    /* Ancho para acomodar las 3 barras */
+    height: 24px;   /* Alto para acomodar las barras con espacio */
+    cursor: pointer;
+    z-index: 200;   /* Nos aseguramos que este por encima del menu */
+}
+
+/* Las 3 barras dentro del icono */
+.menu-icon span {
+    display: block;
+    width: 33px;
+    height: 4px;
+    margin-bottom: 5px;
+    background: gold;  /* Color original de las barras */
+    border-radius: 3px;
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+                opacity 0.55s ease, background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+    transform-origin: 4px 0px;
+}
+
+/* Esto ajusta el origen de la primera y la tercera barra */
+.menu-icon span:first-child {
+    transform-origin: 0% 0%;
+}
+.menu-icon span:nth-child(3) {
+    transform-origin: 0% 100%;
+}
+
+/* Convierte las barras en una X al darle click */
+.menu-toggle:checked + .menu-icon span:first-child {
+    transform: rotate(45deg) translate(-3px, -1px);
+    background: #ffffff;
+}
+.menu-toggle:checked + .menu-icon span:nth-child(2) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+}
+.menu-toggle:checked + .menu-icon span:nth-child(3) {
+    transform: rotate(-45deg) translate(-2px, -0.5px);
+    background: #ffffff;
+}
+
+/* Estilo del navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgb(17, 6, 1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px 0;
+}
+
+/* Reglas base: para móviles (menú hamburguesa) */
+.navbar ul {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Fuera de la pantalla */
+    width: 250px; /* Ancho fijo, ajústalo según tus necesidades */
+    height: 100%; /* Ocupa la altura completa */
+    background: linear-gradient(to bottom, rgba(255,187,0,0.7), rgb(255,208,0));
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column; /* Los ítems se apilan verticalmente */
+    justify-content: flex-start;
+    transition: left 0.3s ease;
+    margin: 0;
+    list-style: none;
+}
+
+.navbar ul li {
+    margin: 0 15px; /* Ajusta la distancia entre categorias */
+}
+
+/* Cuando el checkbox esta marcado desplaza el menu a la vista dandole un efecto como de desplazamiento */
+.menu-toggle:checked ~ ul {
+    left: 0;
+}
+
+/* Estilos para los subvinculos dentro del menu (se aplican a todas las opciones) */
+.navbar ul li a {
+    color: rgb(255, 255, 255);
+    padding: 5px 0px;
+    width: 100%;
+    margin: 5px auto; /* Centra el elemento */
+    text-decoration: none;
+    display: block;
+    transition: background 0.3s ease;
+    position: relative;
+    border-radius: 7px;
+}
+
+/* Animacion al pasar el mouse por una categoria con subvinculo dentro del menu */
+.navbar ul li a::before {
+    content: "";
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: rgba(255, 196, 0, 0.7); /* Color de la línea */
+    transition: transform 0.5s ease;
+    transform: scale3d(0, 1, 1);
+    transform-origin: 50% 50%;
+}
+
+/* Animacion al pasar el mouse aparece la línea */
+.navbar ul li a:hover::before {
+    transform: scale3d(1, 1, 1);
+}
+
+/* Efecto para la opcion activada si el enlace tiene la clase "active" la linea se muestra */
+.navbar ul li a.active::before {
+    transform: scale3d(1, 1, 1);
+}
+
+.logout-link {
+    color: #fff;
+    padding: 5px 0px;
+    margin: 5px auto;
+    text-decoration: none;
+    display: block;
+    transition: background 0.3s ease;
+    position: relative;
+    border-radius: 7px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+}
+
+.logout-link::before {
+    content: "";
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: rgba(255, 196, 0, 0.7);
+    transition: transform 0.5s ease;
+    transform: scale3d(0, 1, 1);
+    transform-origin: 50% 50%;
+}
+
+.logout-link:hover::before {
+    transform: scale3d(1, 1, 1);
+}
+
+/* 
+================================
+ Diseño del cuerpo de la pagina
+================================
+*/
+
+.animate-breathing {
+    animation: breathing 3s ease-in-out infinite;
+  }
+  
+  @keyframes breathing {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+}
+
+/* Contenido principal del body de la pagina */
+.body-content {
+    display: block !important;
+    order: initial !important;
+    color: #E0C066;
+    padding: 10px;
+    text-align: center;
+    flex: 1;
+}
+
+/* Contenido principal del body de la pagina (para pantallas grandes) */
+.body-content.container-fluid {
+    display: flex;
+    flex-direction: column; /* Cambia a columna para apilar los elementos */
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+    margin-top: 10px; /* Espacio superior para el navbar */
+}
+
+/* Estilo para los titulos */
+.body-content h1 {
+    font-size: 2.3em;
+    margin: 20px 0;
+    line-height: 1.5; /* Ajusta este valor según lo necesites */
+}
+
+/* Estilo para los subtitulos */
+.body-content h2 {
+    font-size: 1.2em;
+    margin: 20px 0;
+    line-height: 1.4; /* Ajusta este valor según lo necesites */
+}
+
+/* Diseño del boton para comprar el juego */
+.btn-back {
+    color: #E0C066;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px; /* Bordes redondeados */
+    display: inline-block;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-back {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+  
+.btn-back:hover {
+    transform: scale(1.05);
+    background-color: rgb(83, 83, 83); /* O el color que desees para el hover */
+}
+
+/* 
+==================================
+ Animacion de Scroll de la pagina
+==================================
+*/
+
+/* Clase para aplicar la animación */
+.animate-up {
+    /* Origen de la transformación: opcional, por si quieres que “crezca” desde abajo */
+    transform-origin: center bottom;  
+    /* Transición corta para que la animación sea suave */
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+  }
+
+.animate-up.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/*
+============================================
+ Diseño del formulario de iniciar sesión (adaptado)
+============================================
+*/
+
+/* Resaltar borde de input inválido */
+#loginForm .form-control.is-invalid {
+    border: 1px solid red;
+}
+
+/* Mensajes de error */
+#loginForm .invalid-feedback {
+    color: red;
+    font-size: 1.0em;
+    margin-top: 1px;
+    margin-left: 3px; /* Ajusta este valor según necesites */
+    text-align: left;
+}
+
+/* Icono de error pequeño */
+#loginForm .error-icon {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    line-height: 10px;
+    background-color: red;
+    color: white;
+    text-align: center;
+    border-radius: 50%;
+    margin-right: 5px;
+    font-weight: bold;
+    font-size: 8px;
+    vertical-align: middle;
+    margin-top: -2px;
+}
+
+/* 
+================================
+ Diseño del footer de la pagina 
+================================
+*/
+
+.footer {
+    background: rgb(17, 6, 1);
+    padding: 40px 0 20px;
+    border-top: 1px solid rgb(15, 3, 3);
+    position: relative;
+}
+
+.footer-brand {
+    font-family: 'Arial', sans-serif;
+    color: gold;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    max-width: 320px;
+} 
+
+.footer-text {
+    color: #ffffff;
+    font-size: 0.9rem;
+    /*max-width: 300px;*/
+}
+
+.social-links {
+    margin: 20px 0;
+}
+
+.social-link {
+    color: #ffffff;
+    margin-right: 20px;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.social-link:hover {
+    color: #E0C066;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #E0C066;
+}
+
+.copyright {
+    color: #ffffff;
+    font-size: 0.85rem;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(63, 63, 63, 0.466);
+}
+
+/*
+=======================================================
+ Cambio de diseño al abrir la pagina con un dispositvo
+      movil, tablets o un computador de escritorio
+=======================================================
+*/
+
+/* Para dispositivos de escritorio y tabletas grandes */
+@media (min-width: 768px) {
+    /* Ocultamos el checkbox y el icono hamburguesa */
+    .menu-toggle,
+    .menu-icon {
+        display: none !important;
+    }
+    /* La lista de navegación se posiciona de forma normal */
+    .nav-list {
+        position: static;  /* Deja de estar fixed */
+        background: none;
+        flex-direction: row; /* Asegura un orden horizontal */
+        /* Opcional: quitar transición o top */
+        top: 0;
+        left: 0;
+        width: auto;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Hacer que el contenedor izquierdo se expanda y centre su contenido */
+    .nav-left {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    /* Sobrescribir las reglas de la lista para que se muestre normalmente */
+    .navbar ul {
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        background: none !important;
+        width: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex;
+        flex-direction: row;
+        transition: none !important;
+    }
+    .navbar ul li {
+        margin: 0 15px;
+    }
+
+    .navbar {
+        padding: 5px 0;
+    }
+
+    /* Los ítems del menú se muestran con márgenes normales */
+    .nav-list li {
+        margin: 0 15px;
+    }
+}
+
+/* Ajustes para pantallas tablet y moviles grandes */
+@media (max-width: 420px) {
+    .body-content {
+        display: block !important;
+        order: initial !important;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        margin-top: 50px;
+        flex: 1;
+    }
+}

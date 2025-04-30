@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Rationale&display=swap" rel="stylesheet">
+    <title>Cuenta - The Forest Wiki</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Estilo propio de CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/micuenta.css' %}">
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpg" href="{% static 'core/img/favicon/favicon.png' %}"/>
+</head>
+
+<body id="fondo1" style="background-color: #1E2126;">
+<!-- Menú de navegación -->
+<nav class="navbar d-flex justify-content-between align-items-center">
+    <!-- Menú hamburguesa y enlaces -->
+    <div class="nav-left d-flex align-items-center">
+        <!-- Checkbox oculto para el menú hamburguesa -->
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <!-- Botón de menú hamburguesa -->
+        <label for="menu-toggle" class="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <!-- Lista de navegación -->
+        <ul class="nav-list d-flex align-items-center">
+            <li class="menu"><a href="{% url 'home' %}">Inicio</a></li>
+            <li class="menu"><a href="{% url 'external_posts' %}">Comunidad</a></li>
+            <li class="menu"><a href="{% url 'foro' %}">Foro</a></li>
+            <li class="menu">
+                <a href="https://www.google.com/maps/place/…">Dirección</a>
+            </li>
+            <!-- Si inicio sesion el usuario mostraremos las siguientes categorias -->
+            {% if user.is_authenticated %}
+                <li class="menu">
+                    <a href="{% url 'micuenta' %}">Mi Cuenta</a>
+                </li>
+                <li class="menu">
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-link">Cerrar Sesión</button>
+                    </form>
+                    <!-- Si el usuario es superuser le mostramos esta categoria de administrador -->
+                    {% if user.is_superuser %}
+                        <li class="menu">
+                            <a href="{% url 'ver_cuentas_api' %}">Administrar Cuentas</a>
+                        </li>
+                    {% endif %}
+                <li class="menu" style="color: #ffc400">
+                    <span>Bienvenido, {{ user.username }}</span>
+                </li>
+            {% else %}
+                <li class="menu"><a href="{% url 'registrarse' %}">Registrarse</a></li>
+                <li class="menu"><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<section class="seccion-perfil-usuario"
+         style="background-image: url('{% static 'core/img/background/Fondo3.jpg' %}'); background-size: cover; background-attachment: fixed;">
+    <div class="perfil-usuario-header">
+        <div class="perfil-usuario-portada">
+            <div class="perfil-usuario-avatar">
+                {% if request.user.imagen %}
+                    <img src="{{ request.user.imagen.url }}" alt="Avatar de {{ request.user.username }}">
+                {% else %}
+                    <img src="{% static 'core/img/foro/user.png' %}" alt="Avatar por defecto">
+                {% endif %}
+                <button type="button" class="boton-avatar" data-bs-toggle="modal" data-bs-target="#avatarModal">
+                    <i class="far fa-image"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="perfil-usuario-body">
+        <div class="perfil-usuario-bio">
+            <h3 class="titulo">{{ user.username }}</h3>
+        </div>
+        <div class="perfil-usuario-footer">
+            <ul class="lista-datos">
+                <li>
+                    <i class="bi bi-person-circle"></i> Nombre de Usuario: {{ user.username }}
+                </li>
+
+                <li>
+                    <i class="bi bi-envelope-fill"></i> Email: {{ user.email }}
+                </li>
+
+                <li>
+                    <i class="bi bi-lock-fill"></i> Contraseña: ************
+                </li>
+
+                <div class="w-33">
+                    <div class="center">
+                        <a href="{% url 'micuenta_editar' %}" class="btn btn-dark">Editar</a>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Modal de Bootstrap para el Formulario de Imagen -->
+<div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-avatar">
+            <div class="modal-header">
+                <h5 class="modal-title" id="avatarModalLabel">Cambiar foto de perfil</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Cerrar"></button>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <label class="form-label">Imagen actual:</label><br>
+                    {% if request.user.imagen %}
+                        <img src="{{ request.user.imagen.url }}" alt="Avatar actual" class="img-fluid mb-3"
+                             style="max-width: 120px; border-radius: 10px; border: 2px solid #ffc400;">
+                    {% else %}
+                        <img src="{% static 'core/img/foro/user.png' %}" alt="Avatar por defecto" class="img-fluid mb-3"
+                             style="max-width: 120px; border-radius: 10px; border: 2px solid #ffc400;">
+                    {% endif %}
+
+                    <label for="id_imagen" class="form-label">Modificar:</label>
+                    <input type="file" name="imagen" id="id_imagen" class="form-control-file" required>
+                    <p id="nombre-archivo" class="mt-2">Ningún archivo seleccionado</p>
+                    {% if form.imagen.errors %}
+                        <div class="text-danger">{{ form.imagen.errors }}</div>
+                    {% endif %}
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Pie de página (Usamos Bootstrap para la responsividad) -->
+<footer class="footer">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Columna Izquierda -->
+            <div class="col-md-6 text-center text-md-start">
+                <div class="footer-brand">
+                    <span>The Forest Wiki</span>
+                </div>
+                <p class="footer-text">
+                    Recopilando información esencial desde 2025.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <!-- Columna Derecha -->
+            <div class="col-md-6 d-flex justify-content-center justify-content-md-end">
+                <ul class="footer-links">
+                    <li><a href="#">Inicio</a></li>
+                    <!--<li><a href="{% url 'error_404' %}">Categorías</a></li>-->
+                    <li>
+                        <a href="https://www.google.com/maps/place/R%C3%ADo+Imperial+460,+Valle+Grande,+Lampa,+Regi%C3%B3n+Metropolitana/@-33.3295809,-70.751195,17z/data=!3m1!4b1!4m5!3m4!1s0x9662bf62531dc747:0xc0b4aee73c3b9373!8m2!3d-33.3295854!4d-70.7490063?hl=es-CL">Dirección</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright text-center">
+            © 2025 The Forest Wiki. Todos los derechos reservados.
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const input = document.getElementById('id_imagen');
+        const label = document.getElementById('nombre-archivo');
+        if (input && label) {
+            input.addEventListener('change', function () {
+                label.textContent = this.files.length > 0 ? this.files[0].name : 'Ningún archivo seleccionado';
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

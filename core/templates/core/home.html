@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Rationale&display=swap" rel="stylesheet">
+    <title>Pokedex Wiki</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Estilo propio de CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/home.css' %}">
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpg" href="{% static 'core/img/favicon/favicon.png' %}"/>
+    <!-- Sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+<!-- Menú de navegación -->
+<nav class="navbar d-flex justify-content-between align-items-center">
+    <!-- Menú hamburguesa y enlaces -->
+    <div class="nav-left d-flex align-items-center">
+        <!-- Checkbox oculto para el menú hamburguesa -->
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <!-- Botón de menú hamburguesa -->
+        <label for="menu-toggle" class="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <!-- Lista de navegación -->
+        <ul class="nav-list d-flex align-items-center">
+            <li class="menu"><a href="{% url 'home' %}">Inicio</a></li>
+            <li class="menu"><a href="{% url 'external_posts' %}">Comunidad</a></li>
+            <li class="menu"><a href="{% url 'foro' %}">Foro</a></li>
+            <li class="menu"><a href="{% url 'pokedex' %}">Pokedex</a></li>
+            <!-- Si inicio sesion el usuario mostraremos las siguientes categorias -->
+            {% if user.is_authenticated %}
+                <li class="menu">
+                    <a href="{% url 'micuenta' %}">Mi Cuenta</a>
+                </li>
+                <li class="menu">
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-link">Cerrar Sesión</button>
+                    </form>
+                    <!-- Si el usuario es superuser le mostramos esta categoria de administrador -->
+                    {% if user.is_superuser %}
+                        <li class="menu">
+                            <a href="{% url 'ver_cuentas_api' %}">Administrar Cuentas</a>
+                        </li>
+                    {% endif %}
+                <li class="menu" style="color: #ffc400">
+                    <span>Bienvenido, {{ user.username }}</span>
+                </li>
+            {% else %}
+                <li class="menu"><a href="{% url 'registrarse' %}">Registrarse</a></li>
+                <li class="menu"><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<!-- Contenido principal -->
+<div class="body-content container py-5 py-md-50">
+    <img src="{% static 'core/img/home/site-logo.png' %}" alt="Img Logo" class="animate-breathing img-fluid w-1">
+
+    <!-- Caja de informacion -->
+    <div class="forest-intro animate-up">
+        <p>
+            ¿Te gusta <span class="resaltado">Pokemon</span>? ¡A nosotros igual!, 
+            pero ¿alguna vez imaginaste tener una Pokedex en tu dispositivo electronico?<br>
+            Aquí en <span class="resaltado">Pokedex Wiki</span> encontrarás todo lo que necesitas
+            saber sobre tus pokemons favoritos, desde su tipo, vida, ataque, defensa, ataque especial, defensa especial
+            y velocidad.<br>
+            <strong>¡Explora y descubre todo lo que necesitas!</strong>
+        </p>
+    </div>
+    
+    <button class="btn btn-primary" onclick="location.href='{% url 'external_posts' %}'">
+        <i class="fas fa-users"></i> Comenzar
+    </button>
+</div>
+
+<!-- Pie de página (Usamos Bootstrap para la responsividad) -->
+<footer class="footer">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Columna Izquierda -->
+            <div class="col-md-6 text-center text-md-start">
+                <div class="footer-brand">
+                    <span>Pokedex Wiki</span>
+                </div>
+                <p class="footer-text">
+                    Recopilando información esencial desde 2025.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <!-- Columna Derecha -->
+            <div class="col-md-6 d-flex justify-content-center justify-content-md-end">
+                <ul class="footer-links">
+                    <li><a href="#">Inicio</a></li>
+                    <!--<li><a href="{% url 'error_404' %}">Categorías</a></li>-->
+                    <li>
+                        <a href="https://www.google.com/maps/place/R%C3%ADo+Imperial+460,+Valle+Grande,+Lampa,+Regi%C3%B3n+Metropolitana/@-33.3295809,-70.751195,17z/data=!3m1!4b1!4m5!3m4!1s0x9662bf62531dc747:0xc0b4aee73c3b9373!8m2!3d-33.3295854!4d-70.7490063?hl=es-CL">Dirección</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright text-center">
+            © 2025 Pokedex Wiki. Todos los derechos reservados.
+        </div>
+    </div>
+</footer>
+
+<!-- Enlazar nuestros scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<script src="{% static 'core/js/app.js' %}"></script>
+<script src="{% static 'core/js/scroll.js' %}"></script>
+<!--<script src="scripts/auth.js"></script>-->
+<script>
+    function confirmarLogout() {
+        Swal.fire({
+            title: '¿Cerrar sesión?',
+            text: "¿Estás seguro de que deseas salir?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, cerrar sesión',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout-form').submit();
+            }
+        });
+    }
+</script>
+
+</body>
+
+</html>
