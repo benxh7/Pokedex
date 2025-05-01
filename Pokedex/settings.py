@@ -15,7 +15,6 @@ import os, sys
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 import cx_Oracle
-from django.conf.global_settings import LOGIN_URL
 
 cx_Oracle.init_oracle_client(lib_dir=r"C:\Program Files\instantclient_23_7")
 
@@ -96,8 +95,6 @@ DATABASES = {
     }
 }
 
-#AUTH_USER_MODEL = 'core.CustomUser'
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -156,7 +153,7 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-AUTH_USER_MODEL = 'core.Cuenta'
+AUTH_USER_MODEL = 'core.Usuario'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

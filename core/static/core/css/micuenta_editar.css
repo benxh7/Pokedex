@@ -9,7 +9,7 @@ html, body {
 }
 
 #fondo {
-    background-image: url('../img/background/Fondo3.jpg');
+    background-image: url('../img/background/Fondo.jpg');
     background-size: cover;
     background-attachment: fixed;
     min-height: 80vh;

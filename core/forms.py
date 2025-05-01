@@ -1,44 +1,66 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Cuenta, Comentario
+from .models import Usuario, Comentario
 
-# Formulario para registrar nuevos usuarios en la base de datos
-class RegisterForm(UserCreationForm):
+class RegisterForm(forms.ModelForm):
+    password1 = forms.CharField(
+        widget=forms.PasswordInput,
+        label="Contraseña"
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput,
+        label="Confirmar Contraseña"
+    )
+
     class Meta:
-        model = Cuenta
-        # 'password1' y 'password2' vienen de UserCreationForm
-        # y se usan para manejar la validación de la contraseña.
-        fields = ['username', 'email', 'password1', 'password2']
-        labels = {
-            'username': 'Nombre de Usuario',
-            'email': 'Correo Electrónico',
-            'password1': 'Contraseña',
-            'password2': 'Confirmar Contraseña'
-        }
+        model  = Usuario
+        fields = ['username', 'email']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Ingresa tu nombre de usuario',
-        })
-        self.fields['email'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'correo@ejemplo.com',
-        })
-        self.fields['password1'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Ingresa tu contraseña',
-        })
-        self.fields['password2'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Confirma tu contraseña',
-        })
+        # Aplica form-control y placeholder automáticamente
+        for field_name in ['username', 'email', 'password1', 'password2']:
+            field = self.fields[field_name]
+            field.widget.attrs.update({
+                'class': 'form-control',
+                'placeholder': field.label
+            })
+
+    def clean_password2(self):
+        p1 = self.cleaned_data.get('password1')
+        p2 = self.cleaned_data.get('password2')
+        if p1 != p2:
+            raise forms.ValidationError("Las contraseñas no coinciden.")
+        return p2
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password1'])
+        if commit:
+            user.save()
+        return user
+
+class LoginForm(forms.Form):
+    username = forms.CharField(label="Nombre de Usuario")
+    password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")
+
+    def clean(self):
+        cleaned = super().clean()
+        uname = cleaned.get('username')
+        pwd   = cleaned.get('password')
+        try:
+            user = Usuario.objects.get(username=uname)
+        except Usuario.DoesNotExist:
+            raise forms.ValidationError("Usuario o contraseña inválidos.")
+        if not user.check_password(pwd):
+            raise forms.ValidationError("Usuario o contraseña inválidos.")
+        cleaned['user'] = user
+        return cleaned
 
 # Formulario para editar el perfil del usuario
 class EditProfileForm(forms.ModelForm):
     class Meta:
-        model = Cuenta
+        model = Usuario
         fields = ['username', 'email']
 
     def __init__(self, *args, **kwargs):
@@ -49,7 +71,7 @@ class EditProfileForm(forms.ModelForm):
 # Formulario para editar la imagen de un perfil de usuario
 class AvatarForm(forms.ModelForm):
     class Meta:
-        model = Cuenta
+        model = Usuario
         fields = ['imagen']
         widgets = {
             'imagen': forms.ClearableFileInput(attrs={

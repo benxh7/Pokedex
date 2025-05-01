@@ -16,7 +16,6 @@
     <!-- Estilo propio de CSS -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'core/css/registrarse.css' %}">
-
     <!-- Favicon -->
     <link rel="icon" type="image/jpg" href="{% static 'core/img/favicon/favicon.png' %}"/>
 </head>
@@ -72,7 +71,7 @@
     <div class="row">
         <!-- Imagen de fondo izquierda -->
         <div class="col-md-6 d-none d-md-block"
-             style="background: url('{% static 'core/img/background/Fondo1.png' %}') no-repeat center center; background-size: cover; height: 100vh;">
+             style="background: url('{% static 'core/img/background/Fondo1.jpg' %}') no-repeat center center; background-size: cover; height: 100vh;">
             <img src="{% static 'core/img/home/site-logo.png' %}"
                  alt="Img Logo"
                  class="site-logo animate-breathing img-fluid w-5 mx-auto mt-5">
@@ -80,59 +79,60 @@
 
         <!-- Formulario de registro derecha -->
         <div class="col-12 col-md-6 d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-            <!-- FORMULARIO REGISTRO -->
-            <form id="registerForm" class="w-50" method="post" action="{% url 'registrarse' %}">
-                {% csrf_token %}
-                <h1 class="mb-4">¡Ingresa tus Datos!</h1>
+            <div class="form-wrapper position-relative mx-auto w-100 w-sm-75 w-md-50"
+                    style="max-width: 400px;">
+                <!-- tu form original, pero ya sin id para el pseudo -->
+                <form id="registerForm" class="position-relative p-4 text-light" method="post"
+                      action="{% url 'registrarse' %}" style="z-index:1;">
+                    {% csrf_token %}
+                    <h1 class="mb-4">¡Ingresa tus Datos!</h1>
 
-                <!-- Nombre de Usuario -->
-                <div class="mb-3 text-start">
-                    {{ form.username.label_tag }}
-                    {{ form.username }}
-                    {% if form.username.errors %}
-                        <div class="text-danger">{{ form.username.errors }}</div>
-                    {% endif %}
-                </div>
-
-                <!-- Email -->
-                {% if form.email %}
+                    <!-- Nombre de Usuario -->
                     <div class="mb-3 text-start">
-                        {{ form.email.label_tag }}
-                        {{ form.email }}
-                        {% if form.email.errors %}
-                            <div class="text-danger">{{ form.email.errors }}</div>
+                        {{ form.username.label_tag }}
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger">{{ form.username.errors }}</div>
                         {% endif %}
                     </div>
-                {% endif %}
-
-                <!-- Contraseña -->
-                <div class="mb-3 text-start">
-                    {{ form.password1.label_tag }}
-                    {{ form.password1 }}
-                    {% if form.password1.errors %}
-                        <div class="text-danger">{{ form.password1.errors }}</div>
+                    <!-- Email -->
+                    {% if form.email %}
+                        <div class="mb-3 text-start">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
                     {% endif %}
-                </div>
+                    <!-- Contraseña -->
+                    <div class="mb-3 text-start">
+                        {{ form.password1.label_tag }}
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}
+                            <div class="text-danger">{{ form.password1.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <!-- Confirmar Contraseña -->
+                    <div class="mb-3 text-start">
+                        {{ form.password2.label_tag }}
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                            <div class="text-danger">{{ form.password2.errors }}</div>
+                        {% endif %}
+                    </div>
 
-                <!-- Confirmar Contraseña -->
-                <div class="mb-3 text-start">
-                    {{ form.password2.label_tag }}
-                    {{ form.password2 }}
-                    {% if form.password2.errors %}
-                        <div class="text-danger">{{ form.password2.errors }}</div>
-                    {% endif %}
-                </div>
+                    <div class="form-check text-start mb-3">
+                        <input type="checkbox" class="form-check-input" id="showPassword">
+                        <label class="form-check-label" for="showPassword">Mostrar contraseña</label>
+                        <a href="{% url 'login' %}" class="ms-2" style="color: rgb(77, 77, 77); text-decoration: none;">
+                            ¿Ya tienes cuenta? Ingresa aquí
+                        </a>
+                    </div>
 
-                <div class="form-check text-start mb-3">
-                    <input type="checkbox" class="form-check-input" id="showPassword">
-                    <label class="form-check-label" for="showPassword">Mostrar contraseña</label>
-                    <a href="{% url 'login' %}" class="ms-2" style="color: rgb(77, 77, 77); text-decoration: none;">
-                        ¿Ya tienes cuenta? Ingresa aquí
-                    </a>
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100">Crear Cuenta</button>
-            </form>
+                    <button type="submit" class="btn btn-light w-100">Crear Cuenta</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -171,13 +171,12 @@
     </div>
 </footer>
 
+<script src="{% static 'core/js/app.js' %}"></script>
+<script src="{% static 'core/js/scroll.js' %}"></script>
+<script src="{% static 'core/js/auth.js' %}"></script>
 <!-- Scripts Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-<!-- Scripts personalizados -->
-<script src="{% static 'core/js/app.js' %}"></script>
-<script src="{% static 'core/js/scroll.js' %}"></script>
-<script src="{% static 'core/js/auth.js' %}"></script>
 </body>
 </html>

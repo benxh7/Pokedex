@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_user_model
+from django.contrib.auth import logout, login, update_session_auth_hash, get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import PasswordChangeForm
-from .forms import RegisterForm, EditProfileForm, AvatarForm, ComentarioForm
+from .forms import RegisterForm, LoginForm, EditProfileForm, AvatarForm, ComentarioForm
 from .models import Comentario
 from datetime import datetime
 import requests
@@ -29,12 +29,10 @@ def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()  # Se guarda el usuario en la DB con contraseña hasheada
-            login(request, user)  # Si quieres que inicie sesión automáticamente tras registrarse
+            user = form.save() # Se guarda el usuario en la DB con contraseña hasheada
+            login(request, user)
             messages.success(request, f'Bienvenido, {user.username}!')
-            return redirect('home')  # Redirige a la url que desees
-        else:
-            messages.error(request, 'Corrige los errores en el formulario.')
+            return redirect('home') # Redirige a la url que desees
     else:
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form': form})
@@ -42,30 +40,15 @@ def register_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        # Validación de campos vacíos
-        if not username:
-            messages.error(request, "El campo 'Nombre de Usuario' es obligatorio.")
-            return
-        if not password:
-            messages.error(request, "El campo 'Contraseña' es obligatorio.")
-            return
-
-        # Autenticación del usuario
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            # Si las credenciales coinciden, iniciamos sesión
-            login(request, user)
-            messages.success(request, f'¡Bienvenido, {user.username}!')
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data['user']
+            request.session['user_id'] = user.id
+            messages.success(request, f'¡Hola de nuevo, {user.username}!')
             return redirect('home')
-        else:
-            # Credenciales inválidas
-            messages.error(request, 'Usuario o contraseña incorrectos')
-            return redirect('login')
-
-    return render(request, 'registration/login.html')
+    else:
+        form = LoginForm()
+    return render(request, 'registration/login.html', {'form': form})
 
 
 @login_required
