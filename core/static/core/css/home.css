@@ -141,7 +141,7 @@ body.modal-open {
     left: -100%; /* Fuera de la pantalla */
     width: 250px; /* Ancho fijo, ajústalo según tus necesidades */
     height: 100%; /* Ocupa la altura completa */
-    background: linear-gradient(to bottom, rgba(255, 187, 0, 0.7), rgb(255, 208, 0));
+    background: #363636;
     padding: 20px 0;
     display: flex;
     flex-direction: column; /* Los ítems se apilan verticalmente */

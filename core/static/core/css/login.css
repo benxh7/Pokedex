@@ -73,10 +73,10 @@ body.modal-open {
     position: fixed;
     top: 13px;
     left: 13px; /* Poscicion del icono hacia la izquierda */
-    width: 33px;    /* Ancho para acomodar las 3 barras */
-    height: 24px;   /* Alto para acomodar las barras con espacio */
+    width: 33px; /* Ancho para acomodar las 3 barras */
+    height: 24px; /* Alto para acomodar las barras con espacio */
     cursor: pointer;
-    z-index: 200;   /* Nos aseguramos que este por encima del menu */
+    z-index: 200; /* Nos aseguramos que este por encima del menu */
 }
 
 /* Las 3 barras dentro del icono */
@@ -85,10 +85,10 @@ body.modal-open {
     width: 33px;
     height: 4px;
     margin-bottom: 5px;
-    background: gold;  /* Color original de las barras */
+    background: #ffffff; /* Color original de las barras */
     border-radius: 3px;
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
-                opacity 0.55s ease, background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+    opacity 0.55s ease, background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
     transform-origin: 4px 0px;
 }
 
@@ -96,6 +96,7 @@ body.modal-open {
 .menu-icon span:first-child {
     transform-origin: 0% 0%;
 }
+
 .menu-icon span:nth-child(3) {
     transform-origin: 0% 100%;
 }
@@ -105,10 +106,12 @@ body.modal-open {
     transform: rotate(45deg) translate(-3px, -1px);
     background: #ffffff;
 }
+
 .menu-toggle:checked + .menu-icon span:nth-child(2) {
     opacity: 0;
     transform: rotate(0deg) scale(0.2, 0.2);
 }
+
 .menu-toggle:checked + .menu-icon span:nth-child(3) {
     transform: rotate(-45deg) translate(-2px, -0.5px);
     background: #ffffff;
@@ -121,9 +124,14 @@ body.modal-open {
     left: 0;
     width: 100%;
     z-index: 100;
-    background: rgb(17, 6, 1);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background: #ef5350;
+    box-shadow: 0 4px 10px rgba(12, 1, 1, 0.1);
     padding: 25px 0;
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar.hidden {
+    transform: translateY(-100%);
 }
 
 /* Reglas base: para móviles (menú hamburguesa) */
@@ -133,7 +141,7 @@ body.modal-open {
     left: -100%; /* Fuera de la pantalla */
     width: 250px; /* Ancho fijo, ajústalo según tus necesidades */
     height: 100%; /* Ocupa la altura completa */
-    background: linear-gradient(to bottom, rgba(255,187,0,0.7), rgb(255,208,0));
+    background: #363636;
     padding: 20px 0;
     display: flex;
     flex-direction: column; /* Los ítems se apilan verticalmente */
@@ -144,7 +152,7 @@ body.modal-open {
 }
 
 .navbar ul li {
-    margin: 0 15px; /* Ajusta la distancia entre categorias */
+    margin: 0 10px; /* Ajusta la distancia entre categorias */
 }
 
 /* Cuando el checkbox esta marcado desplaza el menu a la vista dandole un efecto como de desplazamiento */
@@ -155,28 +163,20 @@ body.modal-open {
 /* Estilos para los subvinculos dentro del menu (se aplican a todas las opciones) */
 .navbar ul li a {
     color: rgb(255, 255, 255);
-    padding: 5px 0px;
+    padding: 5px 10px;
     width: 100%;
     margin: 5px auto; /* Centra el elemento */
     text-decoration: none;
     display: block;
-    transition: background 0.3s ease;
+    transition: background-color 0.3s ease, padding 0.2s ease;
     position: relative;
     border-radius: 7px;
 }
 
-/* Animacion al pasar el mouse por una categoria con subvinculo dentro del menu */
-.navbar ul li a::before {
-    content: "";
-    width: 100%;
-    height: 4px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    background: rgba(255, 196, 0, 0.7); /* Color de la línea */
-    transition: transform 0.5s ease;
-    transform: scale3d(0, 1, 1);
-    transform-origin: 50% 50%;
+.navbar ul li a:hover,
+.logout-link:hover {
+    background-color: #b71c1c; /* rojo oscuro */
+    color: #ffffff; /* asegúrate de que el texto contraste */
 }
 
 /* Animacion al pasar el mouse aparece la línea */
@@ -191,7 +191,7 @@ body.modal-open {
 
 .logout-link {
     color: #fff;
-    padding: 5px 0px;
+    padding: 5px 10px;
     margin: 5px auto;
     text-decoration: none;
     display: block;
@@ -211,7 +211,6 @@ body.modal-open {
     position: absolute;
     left: 0;
     bottom: 0;
-    background: rgba(255, 196, 0, 0.7);
     transition: transform 0.5s ease;
     transform: scale3d(0, 1, 1);
     transform-origin: 50% 50%;
@@ -361,20 +360,19 @@ body.modal-open {
 */
 
 .footer {
-    background: rgb(17, 6, 1);
+    background: #ef5350;
     padding: 40px 0 20px;
-    border-top: 1px solid rgb(15, 3, 3);
+    border-top: 1px solid rgb(47, 9, 9);
     position: relative;
 }
 
 .footer-brand {
-    font-family: 'Arial', sans-serif;
-    color: gold;
+    color: #ffffff;
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 15px;
     max-width: 320px;
-} 
+}
 
 .footer-text {
     color: #ffffff;
@@ -394,7 +392,7 @@ body.modal-open {
 }
 
 .social-link:hover {
-    color: #E0C066;
+    color: #670000;
 }
 
 .footer-links {
@@ -413,7 +411,7 @@ body.modal-open {
 }
 
 .footer-links a:hover {
-    color: #E0C066;
+    color: #670000;
 }
 
 .copyright {
@@ -438,9 +436,15 @@ body.modal-open {
     .menu-icon {
         display: none !important;
     }
+
+    .navbar ul li,
+    .nav-list li {
+        margin: 5px !important;
+    }
+
     /* La lista de navegación se posiciona de forma normal */
     .nav-list {
-        position: static;  /* Deja de estar fixed */
+        position: static; /* Deja de estar fixed */
         background: none;
         flex-direction: row; /* Asegura un orden horizontal */
         /* Opcional: quitar transición o top */
@@ -458,6 +462,7 @@ body.modal-open {
         justify-content: center;
         align-items: center;
     }
+
     /* Sobrescribir las reglas de la lista para que se muestre normalmente */
     .navbar ul {
         position: static !important;
@@ -471,18 +476,11 @@ body.modal-open {
         flex-direction: row;
         transition: none !important;
     }
-    .navbar ul li {
-        margin: 0 15px;
-    }
 
     .navbar {
         padding: 5px 0;
     }
 
-    /* Los ítems del menú se muestran con márgenes normales */
-    .nav-list li {
-        margin: 0 15px;
-    }
 }
 
 /* Ajustes para pantallas tablet y moviles grandes */

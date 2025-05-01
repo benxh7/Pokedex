@@ -2,7 +2,16 @@
     let lastScroll = 0;
     const navbar = document.querySelector('.navbar');
 
+    // Media query para pantallas pequeñas.
+    const isSmallScreen = () => window.innerWidth <= 768;
+
     window.addEventListener('scroll', () => {
+        if (isSmallScreen()) {
+            // Nos aseguramos de que este visible
+            navbar.classList.remove('hidden');
+            return;
+        }
+
         const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
         // Si estamos al tope, siempre mostramos la navbar
@@ -15,6 +24,7 @@
         if (currentScroll > lastScroll) {
             navbar.classList.add('hidden');
         }
+
         // Cuando scrolleamos hacia arriba mostramos la navbar
         else {
             navbar.classList.remove('hidden');
