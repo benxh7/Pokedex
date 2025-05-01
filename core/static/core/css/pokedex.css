@@ -11,7 +11,8 @@ input {
 .poke-card {
     position: relative;
     height: fit-content;
-    font-family: 'Roboto Mono', monospace;
+    font-family: "Jersey 10", sans-serif;
+    letter-spacing: 0.05em;
     max-width: 300px;
     border-radius: 4px;
     color: #000;

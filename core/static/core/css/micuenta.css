@@ -66,7 +66,7 @@
 
 .footer-text {
     color: #ffffff;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     /*max-width: 300px;*/
 }
 
@@ -96,7 +96,7 @@
 .footer-links a {
     color: #ffffff;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     transition: color 0.3s ease;
 }
 
@@ -106,7 +106,7 @@
 
 .copyright {
     color: #ffffff;
-    font-size: 0.85rem;
+    font-size: 1rem;
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid rgba(63, 63, 63, 0.466);
@@ -281,10 +281,11 @@
 }
 
 html, body {
-    font-family: "Rationale", sans-serif;
+    font-family: "Jersey 10", sans-serif;
     font-size: 1.15em;
     font-weight: 500;
     font-style: normal;
+    letter-spacing: 0.05em;
 }
 
 /*=====================================

@@ -2,10 +2,14 @@
    Fondo y ajustes generales
 ============================= */
 html, body {
-    font-family: "Rationale", sans-serif;
+    font-family: "Jersey 10", sans-serif;
     font-size: 1.15em;
     font-weight: 500;
     font-style: normal;
+    letter-spacing: 0.05em;
+    margin: 0;
+    color: #fff;
+
 }
 
 #fondo {
@@ -16,11 +20,6 @@ html, body {
     padding-bottom: 100px; /* Espacio para el footer */
 }
 
-body {
-    font-family: 'Rationale', sans-serif;
-    margin: 0;
-    color: #fff;
-}
 
 /*
 ============================
@@ -249,7 +248,7 @@ h1 {
 
 .footer-text {
     color: #ffffff;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     /*max-width: 300px;*/
 }
 
@@ -279,7 +278,7 @@ h1 {
 .footer-links a {
     color: #ffffff;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     transition: color 0.3s ease;
 }
 
@@ -289,7 +288,7 @@ h1 {
 
 .copyright {
     color: #ffffff;
-    font-size: 0.85rem;
+    font-size: 1rem;
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid rgba(63, 63, 63, 0.466);
