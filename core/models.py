@@ -5,14 +5,9 @@ from django.contrib.auth.models import UserManager
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
 from django.conf import settings
-import uuid
-
-
-def generate_username():
-    return f"user_{uuid.uuid4().hex[:8]}"
-
 
 class Usuario(models.Model):
+    # Definimos el modelo de usuario con sus datos
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)
@@ -25,45 +20,45 @@ class Usuario(models.Model):
         default='default/user.png'
     )
 
+    # Definimos el modelo de usuario como el modelo por defecto
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
+    # Eliminamos espacios al inicio o al final de los nombres
     @classmethod
     def normalize_username(cls, username):
-        """
-        Devuelve la versión “limpia” del username.
-        Django la usa internamente en createsuperuser.
-        """
         return username.strip() if isinstance(username, str) else username
 
+    # Agregamos unos atributos fijos para tener compatibilidad con el sistema de autenticacion
     is_anonymous = False
     is_authenticated = True
 
+    # Definimos el manager para el modelo de usuario
     objects = UserManager()
 
+    # Generamos y guardamos el hash de la contraseña
+    # esto para evitar guardar la contraseña sin encriptar
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
 
+    # Verificamos si el raw_password coincide con el primer hash
+    # que ya almacenamos en la base de datos arriba
     def check_password(self, raw_password):
         return check_password(raw_password, self.password)
 
+    # Ahora definimos la presentacion unica neutral por nombre de usuario
     def natural_key(self):
         return (self.username,)
 
+    # Permisos individuales solo para el superusuario
     def has_perm(self, perm, obj=None):
-        """
-        ¿Este usuario tiene el permiso `perm`?
-        Para simplificar, devolvemos True solo si es superuser.
-        """
         return bool(self.is_superuser)
 
+    # Permiso para ver apps en admin si es un administrador/superusuario
     def has_module_perms(self, app_label):
-        """
-        ¿Este usuario puede ver el módulo (app) `app_label`?
-        Aquí devolvemos True solo a superusuarios o staff.
-        """
         return bool(self.is_staff)
 
+    # El nombre de usuario
     def __str__(self):
         return self.username
 
@@ -72,7 +67,7 @@ class Usuario(models.Model):
 @receiver(pre_save, sender=Usuario)
 def borrar_imagen_antigua(sender, instance, **kwargs):
     if not instance.pk:
-        return  # No hay imagen anterior
+        return # No hay imagen anterior
     try:
         viejo = sender.objects.get(pk=instance.pk)
     except sender.DoesNotExist:

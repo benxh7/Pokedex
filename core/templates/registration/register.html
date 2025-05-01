@@ -79,9 +79,7 @@
 
         <!-- Formulario de registro derecha -->
         <div class="col-12 col-md-6 d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-            <div class="form-wrapper position-relative mx-auto w-100 w-sm-75 w-md-50"
-                    style="max-width: 400px;">
-                <!-- tu form original, pero ya sin id para el pseudo -->
+            <div class="form-wrapper position-relative mx-auto w-100 w-sm-75 w-md-50" style="max-width: 400px;">
                 <form id="registerForm" class="position-relative p-4 text-light" method="post"
                       action="{% url 'registrarse' %}" style="z-index:1;">
                     {% csrf_token %}

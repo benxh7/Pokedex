@@ -74,6 +74,12 @@ HTML5, CSS3, Bootstrap y JavaScript
 
 Editor recomendado: PyCharm
 
+APIS:
+
+- PokeAPI: Proporciona información sobre Pokémon, incluyendo estadísticas, habilidades y evoluciones.
+- PokemonTCG: Proporciona información sobre cartas de Pokémon TCG, incluyendo imágenes y detalles de las cartas.
+- FastAPI: Utilizada para crear una API RESTful que permite la interacción con la base de datos y la lógica de negocio.
+
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 ## 👥 ROLES Y USUARIOS:

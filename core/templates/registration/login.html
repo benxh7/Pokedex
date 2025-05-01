@@ -67,7 +67,7 @@
     <div class="row">
         <!-- Imagen de fondo izquierda -->
         <div class="col-md-6 d-none d-md-block"
-             style="background: url('{% static 'core/img/background/Fondo1.png' %}') no-repeat center center; background-size: cover; height: 100vh;">
+             style="background: url('{% static 'core/img/background/Fondo2.jpg' %}') no-repeat center center; background-size: cover; height: 100vh;">
             <img src="{% static 'core/img/home/site-logo.png' %}"
                  alt="Img Logo"
                  class="site-logo animate-breathing img-fluid w-5 mx-auto mt-5">
@@ -108,11 +108,9 @@
                     Debes ingresar un nombre de usuario y contraseña válidos.
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
-                <div class="mb-3 text-end">
-                    <a href="{% url 'password_reset' %}" style="color: gold; text-decoration: none;">
-                        ¿Olvidaste tu contraseña?
-                    </a>
-                </div>
+                <a href="{% url 'password_reset' %}" style="color: gold; text-decoration: none;">
+                    ¿Olvidaste tu contraseña? Da click aquí
+                </a>
             </form>
         </div>
     </div>

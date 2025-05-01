@@ -38,8 +38,7 @@
             <li class="menu"><a href="{% url 'home' %}">Inicio</a></li>
             <li class="menu"><a href="{% url 'external_posts' %}">Comunidad</a></li>
             <li class="menu"><a href="{% url 'foro' %}">Foro</a></li>
-            <li class="menu"><a href="{% url 'pokedex' %}">Pokédex</a></li>
-            <li class="menu"><a href="{% url 'pokemontcg' %}">Pokémon TCG</a></li>
+            <li class="menu"><a href="{% url 'pokedex' %}">Pokedex</a></li>
             <!-- Si inicio sesion el usuario mostraremos las siguientes categorias -->
             {% if user.is_authenticated %}
                 <li class="menu">
@@ -69,23 +68,24 @@
 
 <!-- Contenido principal -->
 <div class="body-content container py-5 py-md-50">
-    <img src="{% static 'core/img/home/site-logo.png' %}" alt="Img Logo" class="animate-breathing img-fluid w-1">
+    <h2 class="mb-4">Buscador de Cartas TCG</h2>
 
-    <!-- Caja de informacion -->
-    <div class="forest-intro animate-up">
-        <p>
-            ¿Te gusta <span class="resaltado">Pokemon</span>? ¡A nosotros igual!, 
-            pero ¿alguna vez imaginaste tener una Pokedex en tu dispositivo electronico?<br>
-            Aquí en <span class="resaltado">Pokedex Wiki</span> encontrarás todo lo que necesitas
-            saber sobre tus pokemons favoritos, desde su tipo, vida, ataque, defensa, ataque especial, defensa especial
-            y velocidad.<br>
-            <strong>¡Explora y descubre todo lo que necesitas!</strong>
-        </p>
+    <div class="input-group mb-4">
+        <input
+                id="tcg-search"
+                type="text"
+                class="form-control"
+                placeholder="Buscar carta por nombre…"
+                aria-label="Buscar cartas TCG"
+        />
+        <button id="btn-clear" class="btn btn-outline-secondary" type="button">
+            Mostrar todas
+        </button>
     </div>
-    
-    <button class="btn btn-primary" onclick="location.href='{% url 'external_posts' %}'">
-        <i class="fas fa-users"></i> Comenzar
-    </button>
+
+    <div id="cards-container" class="row g-3">
+        <!-- Aquí inyectaremos las cards -->
+    </div>
 </div>
 
 <!-- Pie de página (Usamos Bootstrap para la responsividad) -->
@@ -94,7 +94,8 @@
         <div class="row align-items-center">
             <!-- Columna Izquierda -->
             <div class="col-md-6 text-center text-md-start">
-                <img src="{% static 'core/img/home/pokedexwiki.png' %}" alt="Pokedex Wiki" class="img-fluid" style="max-height: 120px;"/>
+                <img src="{% static 'core/img/home/pokedexwiki.png' %}" alt="Pokedex Wiki" class="img-fluid"
+                     style="max-height: 120px;"/>
                 <p class="footer-text">
                     Descubriendo nuevos Pokémon desde 2025.
                 </p>
@@ -126,6 +127,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 <script src="{% static 'core/js/scroll.js' %}"></script>
+<script src="{% static 'core/js/pokemontcg.js' %}"></script>
 <script>
     function confirmarLogout() {
         Swal.fire({

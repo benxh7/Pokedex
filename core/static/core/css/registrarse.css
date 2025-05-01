@@ -508,25 +508,26 @@ body.modal-open {
 }
 
 .form-wrapper {
-  position: relative;
-  width: 90vw;          /* Ocupa 90% del viewport en móvil */
-  max-width: 90vw;      /* Igual que width, para móviles */
-  margin: auto;
+    position: relative;
+    width: 90vw; /* Ocupa 90% del viewport en móvil */
+    max-width: 90vw; /* Igual que width, para móviles */
+    margin: auto;
 }
 
 .form-wrapper::before {
-  content: "";
-  position: absolute;
-  top: -8px; left: -8px;            /* Ajusta cuánto sobresale */
-  width: calc(100% + 16px);
-  height: calc(100% + 16px);
-  background-color: #d94b48;
-  border-radius: 0.5rem;
-  z-index: 0;
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: -8px; /* Ajusta cuánto sobresale */
+    width: calc(100% + 16px);
+    height: calc(100% + 16px);
+    background-color: #d94b48;
+    border-radius: 0.5rem;
+    z-index: 0;
 }
 
 /* En la propia forma colocamos el form sobre ese fondo */
 .form-wrapper form {
-  position: relative;
-  z-index: 1;
+    position: relative;
+    z-index: 1;
 }

@@ -115,6 +115,8 @@ def error_404(request):
 def pokedex(request):
     return render(request, 'core/pokedex.html')
 
+def pokemontcg(request):
+    return render(request, 'core/pokemontcg.html')
 
 @login_required
 def foro_view(request):
