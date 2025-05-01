@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Cuenta
+from .models import Usuario
 
 class RegistroAdmin(admin.ModelAdmin):
     list_display = ('username', 'email',)
     search_fields = ('username', 'email',)
 
-admin.site.register(Cuenta, RegistroAdmin)
+admin.site.register(Usuario, RegistroAdmin)
