@@ -309,3 +309,8 @@ body {
     flex-shrink: 0;
 }
 
+.pokemon-bg {
+    background: url('/static/core/img/background/Fondo1.jpg') no-repeat center center / cover;
+    min-height: 100%;
+    height: auto;
+}
