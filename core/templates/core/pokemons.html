@@ -21,10 +21,12 @@
 <body>
 <div id="page">
     <header class="header d-flex align-items-center">
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+        <!-- Logo → icono “house” -->
         <a href="{% url 'home' %}" class="logo">
-            <img src="{% static 'core/img/pokemon/icons/pokeball.png' %}"
-                 alt="Pokédex logo"
-                 class="logo-img">
+            <i class="bi bi-house-fill"></i>
         </a>
 
         <!-- Buscador centrado con flexbox -->

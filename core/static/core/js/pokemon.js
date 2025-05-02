@@ -118,7 +118,7 @@ const crearCartaDePokemon = (pokemon) => {
     const pokemonInnerHTML = `
     <div class="front side">
         <div class="img-container">
-        <img class="background" src="/static/core/img/pokemon/icons/default/pokeball.svg" alt="pokeball">
+        <img class="background" src="static/core/img/pokemon/icons/default/pokeball.svg" alt="pokeball">
         <img class="image" src="${frontImg}" alt="${name}">
         </div>
         <span class="number">#${id}</span>
@@ -128,7 +128,7 @@ const crearCartaDePokemon = (pokemon) => {
         .map(
             (type) => `
                 <div class="poke__type__bg ${type}">
-                <img src="/static/core/img/pokemon/icons/${type}.svg" alt="Type">
+                <img src="static/core/img/pokemon/icons/${type}.svg" alt="Type">
                 </div>
           `
         )
@@ -140,7 +140,7 @@ const crearCartaDePokemon = (pokemon) => {
         <img class="image" src="${
         backImg == null ? frontImg : backImg
     }" alt="${name}" />
-        <img class="background" src="/static/core/img/pokemon/icons/default/pokeball.svg" alt="pokeball">
+        <img class="background" src="static/core/img/pokemon/icons/default/pokeball.svg" alt="pokeball">
         </div>
         <span class="number">#${id}</span>
     <div class="stats">

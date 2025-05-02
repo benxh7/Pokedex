@@ -239,14 +239,15 @@ a.scale-on-hover:hover {
     cursor: pointer;
 }
 
-.logo {
-    display: inline-block;
-    transition: transform 0.6s;
+.logo i {
+    font-size: 2rem;
+    color: #fff;
+    transition: color .2s, transform .6s;
 }
 
-.logo:hover {
-    transition: transform 0.6s;
-}
+.logo:hover { transform: rotate(360deg); }
+
+.logo:hover i { color: #d1d1d1; }
 
 .nav .github,
 a {
