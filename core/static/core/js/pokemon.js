@@ -63,20 +63,20 @@ const regions = {
     },
 };
 
-const loader = document.querySelector(".lds-ring");
+const cargador = document.querySelector(".lds-ring");
 const fetchPokemons = async (region) => {
     const {start, end} = regions[region];
 
-    loader.classList.add("ring-active");
+    cargador.classList.add("ring-active");
 
     for (let i = start; i <= end; i++) {
-        const pokemonName = i.toString();
-        const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+        const nombrePokemon = i.toString();
+        const url = `https://pokeapi.co/api/v2/pokemon/${nombrePokemon}`;
 
         let res = await fetch(url);
         let data = await res.json();
-        loader.classList.remove('ring-active')
-        createPokemonCard(data);
+        cargador.classList.remove('ring-active')
+        crearCartaDePokemon(data);
         setTimeout(() => {
         }, "150");
     }
@@ -84,22 +84,7 @@ const fetchPokemons = async (region) => {
 
 const main_types = Object.keys(colors);
 
-// const fetchPokemons = async () => {
-//   for (let i = 1; i <= pokemon_count; i++) {
-//     await getPokemon(i);
-//   }
-// };
-
-// const getPokemon = async (id) => {
-//   const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-//   const res = await fetch(url);
-//   const data = await res.json();
-//   console.log(data);
-//   createPokemonCard(data);
-// };
-
-const createPokemonCard = (pokemon) => {
-
+const crearCartaDePokemon = (pokemon) => {
     const pokemonEl = document.createElement("div");
     pokemonEl.classList.add("card");
     pokemonEl.id = pokemon.id;
@@ -111,15 +96,6 @@ const createPokemonCard = (pokemon) => {
         name = name;
     }
     const id = pokemon.id.toString().padStart(3, "0");
-    //    const moves = [];
-    //    try {
-    //     for (let i = 0; i <= 1 ; i++) {
-    //             moves.push(pokemon.moves[i].move.name);
-    //     }
-    //     console.log(moves);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
 
     let weight = pokemon.weight / 10 + "kg";
     let height = pokemon.height / 10 + "m";
@@ -190,7 +166,7 @@ const createPokemonCard = (pokemon) => {
     poke_container.appendChild(pokemonElHolder);
 };
 
-const changeRegion = () => {
+const cambiarRegion = () => {
     const regionSelect = document.getElementById("regionSelect");
     regionSelect.addEventListener("click", (event) => {
         const selectedRegion = event.target.getAttribute("data-value");
@@ -242,7 +218,7 @@ document
         });
     });
 
-function search_pokemon() {
+function buscar_pokemon() {
     let input = document.getElementById("searchbar").value;
     input = input.toLowerCase();
     input = input.replace(/\s+/g, ""); // removing all spaces from search box
@@ -261,30 +237,4 @@ function search_pokemon() {
     }
 }
 
-
-// dark mode enabled
-const darkModeButton = document.getElementById("dark");
-
-darkModeButton.addEventListener("click", () => {
-
-    let element = document.body;
-    element.classList.toggle("dark-mode");
-    document.body.classList.toggle("dark-mode");
-
-    const regions = document.querySelectorAll(".regionvalue");
-    console.log(regions);
-    regions.forEach(region => {
-        region.classList.toggle("dark-mode");
-    });
-
-});
-
-const darkModeIcon = document.getElementById("dark");
-darkModeButton.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    darkModeIcon.classList.toggle("fa-toggle-on");
-    // You can add additional elements that need dark mode here
-});
-
-
-changeRegion();
+cambiarRegion();

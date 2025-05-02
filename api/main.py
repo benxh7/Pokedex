@@ -1,7 +1,7 @@
 import os
 import django
 from fastapi import FastAPI, HTTPException, Response, Query
-from typing import List
+from typing import List, Union
 from api.schemas import PokemonOut, PokemonStat, PokemonType
 from fastapi.middleware.cors import CORSMiddleware
 import requests
@@ -18,8 +18,11 @@ app = FastAPI(title="Pokedex Wiki API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:8000"],
-    allow_methods=["*"],
+    allow_origins=[
+        "http://127.0.0.1:8000",
+        "http://localhost:8000",
+    ],
+    allow_methods=["GET"],
     allow_headers=["*"],
 )
 
@@ -85,57 +88,17 @@ def get_user(pk: int):
     return serialize_user(u)
 
 # Endpoints para traer datos de un Pokemon
-@app.get("/pokemon/{name}")
-def get_pokemon(name: str):
-    import requests
-    url = f"https://pokeapi.co/api/v2/pokemon/{name.lower()}"
+@app.get("/pokemon/{identifier}", response_model=PokemonOut)
+def get_pokemon(identifier: Union[int, str]):
+    url = f"https://pokeapi.co/api/v2/pokemon/{str(identifier).lower()}"
     resp = requests.get(url, timeout=5)
     if resp.status_code == 404:
         raise HTTPException(404, "Pokémon no encontrado")
     data = resp.json()
 
-    # Serializamos stats y types
-    stats = [
-        PokemonStat(
-            name=s["stat"]["name"],
-            base_stat=s["base_stat"]
-        )
-        for s in data["stats"]
-    ]
-    types = [
-        PokemonType(name=t["type"]["name"])
-        for t in data["types"]
-    ]
-
-    return PokemonOut(
-        id=data["id"],
-        name=data["name"],
-        stats=stats,
-        types=types,
-        sprite=data["sprites"]["front_default"] or ""
-    )
-
-# Endpoint para obtener los datos de un pokemon con su ID
-@app.get("/pokemon/{id}")
-def get_pokemon_by_id(id: int):
-    url = f"https://pokeapi.co/api/v2/pokemon/{id}"
-    resp = requests.get(url, timeout=5)
-    if resp.status_code == 404:
-        raise HTTPException(404, "Pokémon no encontrado")
-    data = resp.json()
-
-    # Serializamos stats y types
-    stats = [
-        PokemonStat(
-            name=s["stat"]["name"],
-            base_stat=s["base_stat"]
-        )
-        for s in data["stats"]
-    ]
-    types = [
-        PokemonType(name=t["type"]["name"])
-        for t in data["types"]
-    ]
+    stats = [PokemonStat(name=s["stat"]["name"], base_stat=s["base_stat"])
+             for s in data["stats"]]
+    types = [PokemonType(name=t["type"]["name"]) for t in data["types"]]
 
     return PokemonOut(
         id=data["id"],
