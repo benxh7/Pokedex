@@ -21,12 +21,17 @@ from api.utils import serialize_comment, serialize_user
 
 # CONFIGURACIÓN
 
-# Tiempo de expiración del token 1 hora
+# Tiempo de expiracion del token 1 hora
+# despues de pasado 1 hora este se borra automaticamente
 TOKEN_TTL_MINUTES = 60
 
+# Configuración de la autenticacion esto lee token
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-
+# Verificamos credenciales enviadas al endpoint /token
+# Esta definicion devuelve una instancia de Usuario, solamente si
+# el nombre existe en la DB y si la contraseña coincide.
+# si no existe el usuario o la contraseña no coincide devuelve None
 def authenticate_user(username: str, password: str):
     try:
         user = Usuario.objects.get(username=username)
@@ -35,6 +40,7 @@ def authenticate_user(username: str, password: str):
     return user if user.check_password(password) else None
 
 
+# Creamos y almacenamos un token para el usuario
 def issue_token(user: Usuario) -> AuthToken:
     return AuthToken.objects.create(
         user=user,
@@ -42,6 +48,10 @@ def issue_token(user: Usuario) -> AuthToken:
     )
 
 
+# Dependencia para los endpoints protegidos, esto
+# extrae la clave token enviada por FastAPI, tambien
+# busca la key en la tabla de AuthToken, verifica la expiracion
+# y si todó esta bien devuelve el usuario asociado a ese token
 def get_current_user(token: str = Depends(oauth2_scheme)) -> Usuario:
     try:
         t = AuthToken.objects.select_related('user').get(pk=token)
@@ -56,7 +66,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> Usuario:
 
 
 # FASTAPI
-app = FastAPI(title="Pokedex Wiki API")
+app = FastAPI(title="Pokédex Wiki API")
 
 # Configuracion del metodo CORS
 # Permitir el acceso a la API desde el frontend

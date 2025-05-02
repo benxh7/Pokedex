@@ -1,6 +1,21 @@
-/*  DETALLE DE POKÉMON  –– Versión unificada 01-may-2025  */
-/*  ───────────────────────────────────────────────────── */
+/* Traducción a español */
+const TYPE_ES = {
+    fire: 'Fuego', water: 'Agua', grass: 'Planta', electric: 'Eléctrico',
+    bug: 'Bicho', normal: 'Normal', poison: 'Veneno', flying: 'Volador',
+    rock: 'Roca', ground: 'Tierra', psychic: 'Psíquico', fighting: 'Lucha',
+    ghost: 'Fantasma', ice: 'Hielo', dragon: 'Dragón', dark: 'Siniestro',
+    steel: 'Acero', fairy: 'Hada'
+};
 
+async function nombreES(url) {
+    /*  Devuelve el nombre en español del recurso (ability, egg‑group…)
+        o el inglés si no existe                           */
+    const data = await fetchJSON(url);
+    const es = data.names?.find(n => n.language.name === 'es');
+    return es ? es.name : data.name;
+}
+
+/* ANIMACION DE CARGA PARA LA PAGINA */
 document.addEventListener('DOMContentLoaded', () => {
     const loader = document.querySelector('.loader-wrapper');
     if (loader) loader.style.display = 'block';
@@ -8,12 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initDetailPage()
         .catch(err => console.error('Error en initDetailPage:', err))
         .finally(() => {
-            if (loader) loader.style.display = 'none';
+            document.body.classList.add('loaded');
         });
 });
 
 async function initDetailPage() {
-    /* ───────── 1) Extraer ID desde /pokemon/<id>/ ───────── */
+    /* Extraemos ID desde /pokemon/<id>/ */
     const segments = window.location.pathname.split('/').filter(Boolean);
     const id = parseInt(segments.pop(), 10);
     if (isNaN(id)) throw new Error('ID de Pokémon inválido en URL');
@@ -36,6 +51,14 @@ async function initDetailPage() {
         fetchJSON(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
     ]);
 
+    /*  ⬇  NUEVO: habilidades y grupos‑huevo en español  */
+    const abilityNames = await Promise.all(
+        data.abilities.map(a => nombreES(a.ability.url))
+    );
+    const eggGroupNames = await Promise.all(
+        species.egg_groups.map(g => nombreES(g.url))
+    );
+
     const typeNames = data.types.map(t => t.type.name);
     const typeDetails = await Promise.all(
         typeNames.map(n => fetchJSON(`https://pokeapi.co/api/v2/type/${n}/`))
@@ -43,9 +66,12 @@ async function initDetailPage() {
 
     /* ───────── 4) Renderizado ───────── */
     displayHeader({data, species, id, pokeball, colors, mainTypes});
-    displayTab1({data, species, icon, id});
-    await displayTab2({data, typeDetails});          // requiere await
-    await displayTab3({species});                    // requiere await
+    displayTab1({
+        data, species, icon, id,
+        abilityNames, eggGroupNames           // ← pasa los arrays
+    });
+    await displayTab2({data, typeDetails});
+    await displayTab3({species});
 }
 
 /* ────────────────────────── UTILIDADES ─────────────────────────── */
@@ -59,7 +85,8 @@ async function fetchJSON(url) {
 /* ─────────────────────── SECCIÓN: HEADER ─────────────────────── */
 
 function displayHeader({data, species, id, pokeball, colors, mainTypes}) {
-    const name = data.name[0].toUpperCase() + data.name.slice(1);
+    const esName = species.names.find(n => n.language.name === 'es')?.name;
+    const name = esName || data.name[0].toUpperCase() + data.name.slice(1);
     const jp = species.names.find(n => n.language.name === 'ja')?.name || name;
     const types = data.types.map(t => t.type.name);
     const bg = colors[types.find(t => mainTypes.includes(t))] || '#fff';
@@ -86,45 +113,40 @@ function displayHeader({data, species, id, pokeball, colors, mainTypes}) {
 
 /* ─────────────────────── SECCIÓN: TAB 1 ─────────────────────── */
 
-function displayTab1({data, species, icon, id}) {
-    const enText = species.flavor_text_entries.find(e => e.language.name === 'en');
-    const text = enText?.flavor_text.replace('\f', ' ') || 'No description.';
-    const genus = species.genera.find(g => g.language.name === 'en')?.genus || '—';
+function displayTab1({data, species, icon, id, abilityNames, eggGroupNames}) {
+    const esText = species.flavor_text_entries.find(e => e.language.name === 'es');
+    const text = esText?.flavor_text.replace(/\f/g, ' ') || 'Sin descripción.';
+    const genus = species.genera.find(g => g.language.name === 'es')?.genus || '—';
+
     const height = (data.height / 10).toFixed(1) + ' m';
     const weight = (data.weight / 10).toFixed(1) + ' kg';
     const types = data.types.map(t => t.type.name);
 
-    /* Extra “About” info */
-    const abilities = data.abilities.map(a => a.ability.name).join(', ');
-    const eggGroups = species.egg_groups.map(g => g.name).join(', ');
     const friendship = species.base_happiness;
     const catchRate = species.capture_rate;
     const ratePct = ((catchRate / 255) * 100).toFixed(2);
 
     document.getElementById('tab_1').innerHTML = `
-    <div class="overview">
-      <p><span class="genus">${genus}</span><br>${text}</p>
-      <div class="heightWeight">
-        <div> 
-            Peso - Altura<br>
-            <b>${weight} - ${height}</b>
-        </div>
-      </div>
-      <div class="types">
-        ${types.map(t => `
-          <div class="poke__type__bg ${t}">
-            <img src="${icon(t)}" alt="${t}">
-          </div>`).join('')}
-      </div>
+  <div class="overview">
+    <p><span class="genus">${genus}</span><br>${text}</p>
+    <div class="heightWeight">
+      <div>Peso - Altura<br><b>${weight} - ${height}</b></div>
     </div>
+    <div class="types">
+      ${types.map(t => `
+        <div class="poke__type__bg ${t}" title="${TYPE_ES[t]}">
+          <img src="${icon(t)}" alt="${TYPE_ES[t]}">
+        </div>`).join('')}
+    </div>
+  </div>
 
-    <div class="about">
-      <div>ID: <b class="id">#${String(id).padStart(3, '0')}</b></div>
-      <div>Abilities: <b>${abilities}</b></div>
-      <div>Catch Rate: <b>${catchRate} (${ratePct}% chance)</b></div>
-      <div>Base Friendship: <b>${friendship}</b></div>
-      <div>Egg Groups: <b>${eggGroups}</b></div>
-    </div>`;
+  <div class="about">
+    <div>ID: <b class="id">#${String(id).padStart(3, '0')}</b></div>
+    <div>Habilidades: <b>${abilityNames.join(', ')}</b></div>
+    <div>Grupos‑huevo: <b>${eggGroupNames.join(', ')}</b></div>
+    <div>Ratio de captura: <b>${catchRate} (${ratePct} %)</b></div>
+    <div>Amistad base: <b>${friendship}</b></div>
+  </div>`;
     activateTab('tab_1');
 }
 
@@ -148,20 +170,22 @@ async function displayTab2({data, typeDetails}) {
         t.damage_relations.double_damage_to.forEach(x => strong.add(x.name));
     });
 
-    const iconImg = name =>
-        `<img src="/static/core/img/pokemon/icons/${name}.svg" class="poke__type__bg ${name}" alt="${name}">`;
+    const iconImg = name => `<img src="/static/core/img/pokemon/icons/${name}.svg"
+       class="poke__type__bg ${name}"
+       title="${TYPE_ES[name]}"
+       alt="${TYPE_ES[name]}">`;
 
     document.getElementById('tab_2').innerHTML = `
     <div class="stats">${statsHtml}</div>
 
     <div class="statTypes">
-      <div class="statTypeText">Weak Against</div>
+      <div class="statTypeText">Débil Contra</div>
       <div class="statIconHolder">
         ${weak.size ? [...weak].map(iconImg).join('') : 'None'}
       </div>
     </div>
     <div class="statTypes">
-      <div class="statTypeText">Strong Against</div>
+      <div class="statTypeText">Fuerte Contra</div>
       <div class="statIconHolder">
         ${strong.size ? [...strong].map(iconImg).join('') : 'None'}
       </div>

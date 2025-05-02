@@ -185,7 +185,7 @@ h1 {
 .name {
     padding: 10px;
     letter-spacing: 5px;
-    font-family: "pocketMonk", sans-serif;
+    font-family: "Jersey 10", sans-serif;
     font-size: 1.5em;
     white-space: nowrap;
     text-overflow: clip;
@@ -197,7 +197,7 @@ h1 {
     margin-top: 20px;
     margin-bottom: 10px;
     padding: 0;
-    font-family: "slumbersWeight", sans-serif;
+    font-family: "Jersey 10", sans-serif;
     font-size: 1.5em;
     font-style: italic;
     letter-spacing: 2px;
@@ -327,7 +327,7 @@ a {
     background-color: rgba(0, 0, 0, 0.1);
     font-weight: 300;
     letter-spacing: 5px;
-    font-family: "slumbersWeight", sans-serif;
+    font-family: "Jersey 10", sans-serif;
     text-align: center;
 }
 
@@ -451,7 +451,7 @@ a {
     width: max-content;
     margin: auto;
     margin-bottom: 20px;
-    font-family: "slumbersWeight", sans-serif;
+    font-family: "Jersey 10", sans-serif;
     font-size: 1.5em;
     font-style: italic;
     letter-spacing: 2px;
@@ -577,7 +577,7 @@ a {
     left: 15%;
     z-index: 999;
     font-size: 1.5em;
-    font-family: pocketMonk;
+    font-family: "Jersey 10", sans-serif;
     display: flex;
 }
 
