@@ -1,10 +1,9 @@
-
 /* ====================
    GENERAL RESET & BODY
 ==================== */
 body {
     background-color: #fff6ec;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Jersey 10', sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -27,12 +26,14 @@ body {
     font-weight: 700;
     font-size: 1.8rem;
     margin-bottom: 20px;
+    font-family: 'Chewy', cursive;
 }
 
 #registerForm label {
     font-weight: 600;
     color: #ef5350;
     font-size: 0.95rem;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 #registerForm input[type="text"],
@@ -43,6 +44,7 @@ body {
     font-size: 0.95rem;
     padding: 10px;
     width: 100%;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 #registerForm button[type="submit"] {
@@ -54,6 +56,7 @@ body {
     padding: 12px;
     transition: background-color 0.3s ease;
     width: 100%;
+    font-family: 'Chewy', cursive;
 }
 
 #registerForm button[type="submit"]:hover {
@@ -63,6 +66,7 @@ body {
 .form-check-label {
     font-size: 0.9rem;
     color: #555;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 #registerForm .text-muted {
@@ -81,7 +85,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    font-family: 'Chewy', cursive;
+    font-family: 'Jersey 10', sans-serif;
 }
 
 .navbar ul {
@@ -96,15 +100,15 @@ body {
 .navbar ul li a {
     color: white;
     text-decoration: none;
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     letter-spacing: 0.5px;
     transition: color 0.3s ease;
 }
 
 .navbar ul li a:hover {
     color: #ffe082;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
-
 
 /*
 ============================
@@ -114,17 +118,17 @@ body {
 
 /* Para navegadores basados en WebKit (Chrome, Safari, Opera) */
 ::-webkit-scrollbar {
-    width: 6px; /* Ancho de la barra vertical, "finita" */
-    height: 6px; /* Alto de la barra horizontal */
+    width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent; /* Sin fondo blanco */
+    background: transparent;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: gold; /* Color naranja */
+    background: gold;
     border-radius: 10px;
     border: none;
 }
@@ -134,7 +138,6 @@ body {
     scrollbar-width: thin;
     scrollbar-color: gold transparent;
 }
-
 
 /* ====================
    FOOTER
@@ -149,6 +152,7 @@ body {
 .footer a {
     color: #ffe082;
     text-decoration: none;
+    font-family: 'Jersey 10', sans-serif;
 }
 
 .footer a:hover {
@@ -181,5 +185,9 @@ body {
 
     #registerForm h1 {
         font-size: 1.5rem;
+    }
+
+    .navbar ul li a {
+        font-size: 1rem;
     }
 }
