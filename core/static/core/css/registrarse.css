@@ -245,3 +245,16 @@ body.modal-open {
         font-size: 1rem;
     }
 }
+
+/* ====================
+   CENTRAR TEXTO DEL NAVBAR
+==================== */
+.navbar ul {
+    justify-content: center;       /* Centra horizontalmente los elementos */
+    text-align: center;            /* Asegura el centrado del texto */
+    width: 100%;                   /* Asegura que ocupe todo el ancho disponible */
+}
+
+.navbar ul li {
+    text-align: center;            /* Centra el texto dentro del <li> */
+}
