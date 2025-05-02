@@ -7,7 +7,7 @@ html, body {
     font-weight: 500;
     font-style: normal;
     letter-spacing: 0.05em;
-    background-color: #F0DA27;
+    background-color: #E8E13A;
     /*background: linear-gradient(90deg, #013003, #031309, #020703);*/
     margin: 0;
     padding: 0;
@@ -292,4 +292,20 @@ body.modal-open {
     display: none !important;
 }
 
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.body-content {
+    flex: 1 0 auto; /* Permite que el contenido crezca */
+}
+
+.footer {
+    flex-shrink: 0;
+}
 
