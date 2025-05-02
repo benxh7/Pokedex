@@ -26,7 +26,22 @@ body.modal-open {
     margin-right: 0 !important;
 }
 
+/* Estilo del navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: #ef5350;
+    box-shadow: 0 4px 10px rgba(12, 1, 1, 0.1);
+    padding: 25px 0;
+    transition: transform 0.3s ease-in-out;
+}
 
+.navbar.hidden {
+    transform: translateY(-100%);
+}
 
 /* ====================
    FORMULARIO REGISTRO
