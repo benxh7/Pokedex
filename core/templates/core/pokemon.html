@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Estilo propio de CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/pokemon_detalles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'core/img/pokemon/icons/pokeball.png' %}"/>
+    <title>Detalles Pokémon</title>
+
+</head>
+<body>
+<div id="pokemon-details">
+</div>
+
+
+<div class="details">
+    <div class="tabs">
+        <span data-tab-value="#tab_1">Overview</span>
+        <span data-tab-value="#tab_2">Stats</span>
+        <span data-tab-value="#tab_3">Evolution</span>
+    </div>
+
+    <div id="tab-content">
+        <div class="tabs__tab active" id="tab_1" data-tab-info>
+        </div>
+        <div class="tabs__tab " id="tab_2" data-tab-info>
+        </div>
+        <div class="tabs__tab " id="tab_3" data-tab-info>
+        </div>
+    </div>
+</div>
+
+<!-- preloader-->
+<div class="loader-wrapper">
+    <div class="loader">
+    </div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
+
+<!-- preloader ends-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" 
+      integrity="sha512-...." crossorigin="anonymous" referrerpolicy="no-referrer">
+<script src="{% static 'core/js/pokemon-detalles.js' %}"></script>
+</body>
+</html>

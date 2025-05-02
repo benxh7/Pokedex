@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import logout, login, update_session_auth_hash, get_user_model
@@ -115,8 +116,22 @@ def error_404(request):
 def pokedex(request):
     return render(request, 'core/pokedex.html')
 
-def pokemontcg(request):
-    return render(request, 'core/pokemontcg.html')
+def pokemons(request):
+    return render(request, 'core/pokemons.html')
+
+def pokemons_detalles(request, id):
+    url = f"http://127.0.0.1:8001/pokemon/{id}"
+    try:
+        resp = requests.get(url, timeout=5)
+        resp.raise_for_status()
+    except requests.RequestException:
+        # tanto tiempo de espera como 4xx/5xx
+        raise Http404("Pokémon no encontrado")
+
+    pokemon = resp.json()
+    return render(request, 'core/pokemon.html', {
+        'pokemon': pokemon
+    })
 
 @login_required
 def foro_view(request):

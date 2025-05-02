@@ -9,7 +9,7 @@ html, body {
     font-weight: 500;
     font-style: normal;
     letter-spacing: 0.05em;
-    background: linear-gradient(90deg, #013003, #031309, #020703);
+    background: #d5d7d6;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -265,14 +265,14 @@ body.modal-open {
 
 /* Estilo para los titulos */
 .body-content h1 {
-    font-size: 2.3em;
+    font-size: 1.7em;
     margin: 20px 0;
     line-height: 1.5; /* Ajusta este valor según lo necesites */
 }
 
 /* Estilo para los subtitulos */
 .body-content h2 {
-    font-size: 1.2em;
+    font-size: 1.0em;
     margin: 20px 0;
     line-height: 1.4; /* Ajusta este valor según lo necesites */
 }

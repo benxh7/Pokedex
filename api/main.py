@@ -115,17 +115,32 @@ def get_pokemon(name: str):
         sprite=data["sprites"]["front_default"] or ""
     )
 
-@app.get("/tcg/cards/")
-def get_tcg_cards(q: str = Query(None, description="Nombre parcial de la carta")):
-    base = "https://api.pokemontcg.io/v2/cards"
-    headers = {"X-Api-Key": ""}  # si tienes API Key, ponla aquí
-    params = {}
-    if q:
-        # búsqueda por nombre que empiece por q (wildcard al final)
-        params["q"] = f'name:{q}*'
-    resp = requests.get(base, params=params, headers=headers, timeout=5)
-    if resp.status_code != 200:
-        raise HTTPException(resp.status_code, "Error al consultar Pokémon TCG API")
+# Endpoint para obtener los datos de un pokemon con su ID
+@app.get("/pokemon/{id}")
+def get_pokemon_by_id(id: int):
+    url = f"https://pokeapi.co/api/v2/pokemon/{id}"
+    resp = requests.get(url, timeout=5)
+    if resp.status_code == 404:
+        raise HTTPException(404, "Pokémon no encontrado")
     data = resp.json()
-    # Devolvemos sólo los primeros 20 para no saturar la página
-    return {"cards": data.get("data", [])[:20]}
+
+    # Serializamos stats y types
+    stats = [
+        PokemonStat(
+            name=s["stat"]["name"],
+            base_stat=s["base_stat"]
+        )
+        for s in data["stats"]
+    ]
+    types = [
+        PokemonType(name=t["type"]["name"])
+        for t in data["types"]
+    ]
+
+    return PokemonOut(
+        id=data["id"],
+        name=data["name"],
+        stats=stats,
+        types=types,
+        sprite=data["sprites"]["front_default"] or ""
+    )

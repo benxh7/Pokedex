@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import home, error_404, login_view, register_view, logout_view, mi_cuenta_view, mi_cuenta_editar_view, \
-    cambiar_contraseña_view, pokedex, pokemontcg, foro_view, \
+    cambiar_contraseña_view, pokedex, pokemons, pokemons_detalles, foro_view, \
     comment_edit, comment_delete, external_posts, ver_cuentas_api, user_delete
 
 # Aqui debemos añadir las urls de la app core
@@ -13,7 +13,8 @@ urlpatterns = [
     path('cambiar_contraseña/', cambiar_contraseña_view, name='cambiar_contraseña'),
     path('', home, name='home'),
     path('pokedex', pokedex, name='pokedex'),
-    path('pokemontcg', pokemontcg, name='pokemontcg'),
+    path('pokemons', pokemons, name='pokemons'),
+    path('pokemon/<int:id>/', pokemons_detalles, name='pokemon'),
     path('error_404', error_404, name='error_404'),
     path('foro', foro_view, name='foro'),
     path('comentario/<int:pk>/editar/', comment_edit, name="comment_edit"),
