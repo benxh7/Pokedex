@@ -114,7 +114,10 @@ body.modal-open {
 
 #registerForm button[type="submit"]:hover {
     background-color: #d32f2f;
+    color: gold;
+    transform: scale(1.02);
 }
+
 
 .form-check-label {
     font-size: 0.9rem;
@@ -125,9 +128,6 @@ body.modal-open {
     font-size: 0.9rem;
 }
 
-.registerForm button a:hover {
-    color: gold;
-}
 
 /* ====================
    SCROLLBAR PERSONALIZADO
