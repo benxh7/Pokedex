@@ -10,7 +10,11 @@ html, body {
     font-style: normal;
     letter-spacing: 0.05em;
     background-color: #ffffff;
-    /*background: linear-gradient(90deg, #013003, #031309, #020703);*/
+    background-image: url("../img/home/fondop.jpg"); /* Ajusta la ruta si es necesario */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
     margin: 0;
     padding: 0;
     text-align: center;
