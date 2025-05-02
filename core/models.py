@@ -4,6 +4,8 @@ from django.contrib.auth.models import UserManager
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
 from django.conf import settings
+from django.utils import timezone
+import secrets
 
 DEFAULT_USER_IMAGE = 'default/user.png'
 
@@ -63,6 +65,24 @@ class Usuario(models.Model):
     # El nombre de usuario
     def __str__(self):
         return self.username
+
+class AuthToken(models.Model):
+    key = models.CharField(max_length=40, primary_key=True, editable=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='auth_tokens', on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(null=True, blank=True)
+
+    @staticmethod
+    def generate_key():
+        return secrets.token_urlsafe(20)
+
+    def save(self, *args, **kwargs):
+        if not self.key:
+            self.key = self.generate_key()
+        super().save(*args, **kwargs)
+
+    def is_expired(self):
+        return self.expires_at and timezone.now() >= self.expires_at
 
 
 # Si el usuario cambia su foto, eliminamos la anterior
