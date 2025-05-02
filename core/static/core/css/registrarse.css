@@ -311,6 +311,6 @@ body {
 
 .pokemon-bg {
     background: url('/static/core/img/background/Fondo1.jpg') no-repeat center center / cover;
-    min-height: 100%;
+    min-height: 110%;
     height: auto;
 }
