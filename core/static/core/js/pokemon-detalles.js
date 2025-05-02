@@ -19,8 +19,7 @@ async function initDetailPage() {
     if (isNaN(id)) throw new Error('ID de Pokémon inválido en URL');
 
     /* ───────── 2) Configuración de recursos ───────── */
-    const STATIC_URL = '/static/';
-    const pokeball = `${STATIC_URL}core/img/pokemon/icons/default/pokeball.svg`;
+    const pokeball = `/static/core/img/pokemon/icons/default/pokeball.svg`;
     const colors = {
         fire: '#e03a3a', grass: '#50C878', electric: '#fad343', water: '#1E90FF',
         ground: '#735139', rock: '#63594f', fairy: '#EE99AC', poison: '#b34fb3',
@@ -29,7 +28,7 @@ async function initDetailPage() {
         steel: '#808080', ice: '#98D8D8'
     };
     const mainTypes = Object.keys(colors);
-    const icon = t => `${STATIC_URL}core/img/pokemon/icons/${t}.svg`;
+    const icon = t => `/static/core/img/pokemon/icons/${t}.svg`;
 
     /* ───────── 3) Descarga de datos (Pokémon, especie, tipos) ───────── */
     const [data, species] = await Promise.all([
@@ -106,8 +105,10 @@ function displayTab1({data, species, icon, id}) {
     <div class="overview">
       <p><span class="genus">${genus}</span><br>${text}</p>
       <div class="heightWeight">
-        <span>Height:<br><b>${height}</b></span>
-        <span>Weight:<br><b>${weight}</b></span>
+        <div> 
+            Peso - Altura<br>
+            <b>${weight} - ${height}</b>
+        </div>
       </div>
       <div class="types">
         ${types.map(t => `

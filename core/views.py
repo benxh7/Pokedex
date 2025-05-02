@@ -129,7 +129,7 @@ def pokemons_detalles(request, id):
         raise Http404("Pokémon no encontrado")
 
     pokemon = resp.json()
-    return render(request, 'core/pokemon.html', {
+    return render(request, 'core/pokemon_detalles.html', {
         'pokemon': pokemon
     })
 
@@ -182,7 +182,7 @@ def comment_delete(request, pk):
 # Vista para obtener publicaciones externas sobre el juego mediante una API
 # de esta forma el usuario puede tener datos o informacion de otras fuentes
 def external_posts(request):
-    url = "https://www.reddit.com/r/theforest/new.json?limit=12"
+    url = "https://www.reddit.com/r/PokemonES/new.json?limit=12"
     headers = {"User-Agent": "TheForestWikiApp/0.1"}
     try:
         resp = requests.get(url, headers=headers, timeout=5)
