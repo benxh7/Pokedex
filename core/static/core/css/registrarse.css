@@ -2,18 +2,23 @@
    GENERAL RESET & BODY
 ==================== */
 html, body {
-    font-family: "Josefin Sans", sans-serif;
-    font-size: 1.1em;
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.15em;
+    font-weight: 500;
     font-style: normal;
+    letter-spacing: 0.05em;
     background-color: #ffffff;
+    /*background: linear-gradient(90deg, #013003, #031309, #020703);*/
     margin: 0;
     padding: 0;
-    min-height: 100vh;
-    overflow-x: hidden;
+    text-align: center;
+    min-height: 150vh;
+    overflow-x: hidden; /* Evita el que la pagina no aumente su tamaño horizontalmente */
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
+    box-sizing: border-box; /* Incluye el padding y el border */
+    position: relative;
+    scroll-behavior: smooth; /* Hace que el desplazamiento sea muy suave */
 }
 
 body.modal-open {
