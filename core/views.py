@@ -134,7 +134,7 @@ def pokemons_detalles(request, id):
     })
 
 @login_required
-def foro_view(request):
+def post_view(request):
     comentarios = Comentario.objects.filter(parent__isnull=True).select_related('usuario').prefetch_related(
         'replies__usuario')
 
@@ -145,7 +145,7 @@ def foro_view(request):
         nuevo.save()
         return redirect('foro')
 
-    return render(request, 'core/foro.html', {
+    return render(request, 'core/post_comunidad.html', {
         'comentarios': comentarios,
         'form': form,
     })
@@ -165,7 +165,7 @@ def comment_edit(request, pk):
                 messages.success(request, "Comentario editado correctamente.")
             else:
                 messages.error(request, "Hubo un error al editar el comentario.")
-    return redirect('foro')
+    return redirect('post')
 
 
 @login_required
@@ -176,7 +176,7 @@ def comment_delete(request, pk):
     else:
         comentario.delete()
         messages.success(request, "Comentario borrado.")
-    return redirect('foro')
+    return redirect('post')
 
 
 # Vista para obtener publicaciones externas sobre el juego mediante una API

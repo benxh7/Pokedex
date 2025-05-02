@@ -5,6 +5,9 @@ from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
 from django.conf import settings
 
+DEFAULT_USER_IMAGE = 'default/user.png'
+
+
 class Usuario(models.Model):
     # Definimos el modelo de usuario con sus datos
     username = models.CharField(max_length=150, unique=True)
@@ -16,7 +19,7 @@ class Usuario(models.Model):
     date_joined = models.DateTimeField(auto_now_add=True)
     imagen = models.ImageField(
         upload_to='fotos_perfil', null=True, blank=True,
-        default='default/user.png'
+        default=DEFAULT_USER_IMAGE
     )
 
     # Definimos el modelo de usuario como el modelo por defecto
@@ -62,24 +65,30 @@ class Usuario(models.Model):
         return self.username
 
 
-# Borramos la imagen de perfil anterior al guardar una nueva
+# Si el usuario cambia su foto, eliminamos la anterior
+# solo si no es la imagen generada automaticamente
 @receiver(pre_save, sender=Usuario)
 def borrar_imagen_antigua(sender, instance, **kwargs):
     if not instance.pk:
-        return # No hay imagen anterior
+        return  # No hay imagen anterior
     try:
         viejo = sender.objects.get(pk=instance.pk)
     except sender.DoesNotExist:
         return
     # Si la imagen ha cambiado, borramos la anterior
-    if viejo.imagen and viejo.imagen.name != instance.imagen.name:
+    if (
+            viejo.imagen
+            and viejo.imagen.name != DEFAULT_USER_IMAGE
+            and viejo.imagen.name != instance.imagen.name
+    ):
         viejo.imagen.delete(save=False)
 
 
-# Borramos la imagen al eliminar la cuenta
+# Cuando eliminemos la cuenta, quitamos la foto de perfil tambien
+# excepto si es la imagen generada automaticamente
 @receiver(post_delete, sender=Usuario)
 def borrar_imagen_al_eliminar(sender, instance, **kwargs):
-    if instance.imagen:
+    if instance.imagen and instance.imagen.name != DEFAULT_USER_IMAGE:
         instance.imagen.delete(save=False)
 
 

@@ -1,6 +1,6 @@
 import os
 import django
-from fastapi import FastAPI, HTTPException, Response, Query
+from fastapi import FastAPI, HTTPException, Response
 from typing import List, Union
 from api.schemas import PokemonOut, PokemonStat, PokemonType
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,7 +20,6 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://127.0.0.1:8000",
-        "http://localhost:8000",
     ],
     allow_methods=["GET"],
     allow_headers=["*"],
