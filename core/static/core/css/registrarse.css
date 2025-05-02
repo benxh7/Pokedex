@@ -313,7 +313,6 @@ body {
     background: url('/static/core/img/background/Fondo1.jpg') no-repeat center center / cover;
     min-height: 110%;
     height: auto;
-    min-height: 100vh;                  /* Altura completa del viewport */
     width: 100%;
     border-bottom: 4px solid #ef5350;   /* Línea divisoria hacia el footer */
 }
