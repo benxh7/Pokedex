@@ -74,13 +74,14 @@ body {
 ==================== */
 .navbar {
     background-color: #ef5350 !important;
-    padding: 10px 20px;
+    padding: 12px 30px;
     color: white;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    font-family: 'Chewy', cursive;
 }
 
 .navbar ul {
@@ -89,22 +90,51 @@ body {
     flex-wrap: wrap;
     padding-left: 0;
     margin: 0;
-}
-
-.navbar ul li {
-    margin: 0 10px;
+    gap: 20px;
 }
 
 .navbar ul li a {
     color: white;
-    font-weight: bold;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.15rem;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
 }
 
 .navbar ul li a:hover {
     color: #ffe082;
 }
+
+
+/*
+============================
+ Diseño de la barra lateral
+============================
+*/
+
+/* Para navegadores basados en WebKit (Chrome, Safari, Opera) */
+::-webkit-scrollbar {
+    width: 6px; /* Ancho de la barra vertical, "finita" */
+    height: 6px; /* Alto de la barra horizontal */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* Sin fondo blanco */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: gold; /* Color naranja */
+    border-radius: 10px;
+    border: none;
+}
+
+/* Para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: gold transparent;
+}
+
 
 /* ====================
    FOOTER
