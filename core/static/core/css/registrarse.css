@@ -287,3 +287,7 @@ body.modal-open {
     width: 100%;
     justify-content: center !important;
 }
+
+.menu-toggle {
+    display: none !important;
+}
