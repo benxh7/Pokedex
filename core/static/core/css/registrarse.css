@@ -1,98 +1,108 @@
-
-/* Fondo general */
-body {
-    background-color: #fff6ec;
-    font-family: 'Josefin Sans', sans-serif;
-}
-
-/* Estilo del formulario */
-#registerForm {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    color: #333;
-}
-
-#registerForm h1 {
-    color: #ef5350;
-    font-weight: 700;
-    font-size: 1.8rem;
-}
-
-/* Etiquetas de los campos */
-#registerForm label {
-    font-weight: 600;
-    color: #ef5350;
-    font-size: 0.95rem;
-}
-
-/* Campos de entrada */
-#registerForm input[type="text"],
-#registerForm input[type="email"],
-#registerForm input[type="password"] {
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 0.95rem;
-    padding: 10px;
-    width: 100%;
-}
-
-/* Botón de envío */
-#registerForm button[type="submit"] {
-    background-color: #ef5350;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    color: white;
-    padding: 12px;
-    transition: background-color 0.3s ease;
-}
-
-#registerForm button[type="submit"]:hover {
-    background-color: #d32f2f;
-}
-
-/* Checkbox y enlace de login */
-.form-check-label {
-    font-size: 0.9rem;
-    color: #555;
-}
-
-#registerForm .text-muted {
-    font-size: 0.9rem;
-}
-
-/* Footer actualizado */
-.footer {
-    background-color: #ef5350;
-    color: white;
-    padding: 40px 0;
-    border-top: 2px solid #c62828;
-}
-
-.footer a {
-    color: #ffe082;
-    text-decoration: none;
-}
-
-.footer a:hover {
-    color: white;
-    text-decoration: underline;
-}
-
-/* Navbar estilos */
+/* ================================
+   REGLAS PARA EL HEADER RESPONSIVE
+================================= */
 .navbar {
-    background-color: #ef5350 !important;
-    padding: 10px 20px;
-    color: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: #ef5350;
+    box-shadow: 0 4px 10px rgba(12, 1, 1, 0.1);
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
 }
 
-.navbar ul li a {
-    color: white;
+.navbar .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    margin: 0 auto;
+    justify-content: center;
+    list-style: none;
 }
 
-.navbar ul li a:hover {
-    color: #ffe082;
+.navbar .nav-list .menu {
+    margin: 0 8px;
+}
+
+.navbar .nav-list .menu a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.navbar .nav-list .menu a:hover {
+    background-color: #b71c1c;
+}
+
+/* =============================
+   HAMBURGER MENU (Responsive)
+============================= */
+.menu-toggle,
+.menu-icon {
+    display: none;
+}
+
+/* MOBILE HEADER NAVIGATION */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        top: 22px;
+        left: 20px;
+        z-index: 999;
+    }
+
+    .menu-icon {
+        display: block;
+        width: 30px;
+        cursor: pointer;
+        z-index: 999;
+    }
+
+    .menu-icon span {
+        background: #fff;
+        display: block;
+        height: 4px;
+        margin: 5px 0;
+        border-radius: 3px;
+    }
+
+    .nav-list {
+        position: absolute;
+        top: 60px;
+        left: -100%;
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+        background-color: #ef5350;
+        transition: left 0.3s ease-in-out;
+        padding-bottom: 20px;
+    }
+
+    .menu-toggle:checked ~ .nav-list {
+        left: 0;
+    }
+}
+
+/* ============================
+   EVITAR PUNTOS Y SANGRÍAS
+============================= */
+.navbar ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/* ============================
+   TIPOGRAFÍA AJUSTADA GENERAL
+============================= */
+body {
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.1em;
+    margin-top: 80px;
 }
