@@ -258,3 +258,20 @@ body.modal-open {
 .navbar ul li {
     text-align: center;            /* Centra el texto dentro del <li> */
 }
+
+
+/* ================================
+   CENTRADO VISUAL DEL NAVBAR (FIX)
+================================ */
+.navbar ul {
+    justify-content: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.navbar ul li {
+    text-align: center;
+    display: inline-block;
+}
