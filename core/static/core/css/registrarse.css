@@ -1,3 +1,4 @@
+
 /* ====================
    GENERAL RESET & BODY
 ==================== */
@@ -5,20 +6,18 @@ html, body {
     font-family: "Jersey 10", sans-serif;
     font-size: 1.15em;
     font-weight: 500;
-    font-style: normal;
     letter-spacing: 0.05em;
     background-color: #ffffff;
-    /*background: linear-gradient(90deg, #013003, #031309, #020703);*/
     margin: 0;
     padding: 0;
-    text-align: center;
     min-height: 150vh;
-    overflow-x: hidden; /* Evita el que la pagina no aumente su tamaño horizontalmente */
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    box-sizing: border-box; /* Incluye el padding y el border */
-    position: relative;
-    scroll-behavior: smooth; /* Hace que el desplazamiento sea muy suave */
+    align-items: center;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    text-align: center;
 }
 
 body.modal-open {
@@ -37,7 +36,6 @@ body.modal-open {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Jersey 10", sans-serif;
 }
 
 .navbar ul {
@@ -116,13 +114,10 @@ body.modal-open {
     background-color: #d32f2f;
 }
 
-.form-check-label {
-    font-size: 0.9rem;
-    color: #555;
-}
-
+.form-check-label,
 #registerForm .text-muted {
     font-size: 0.9rem;
+    color: #555;
 }
 
 /* ====================
@@ -149,46 +144,20 @@ body.modal-open {
     scrollbar-color: gold transparent;
 }
 
-/*
-================================
- Diseño del footer de la pagina
-================================
-*/
-
+/* ====================
+   FOOTER
+==================== */
 .footer {
     background: #ef5350;
     padding: 40px 0 20px;
     border-top: 1px solid rgb(47, 9, 9);
-    position: relative;
+    color: #ffffff;
 }
 
-.footer-brand {
-    color: #ffffff;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-    max-width: 320px;
-}
-
-.footer-text {
-    color: #ffffff;
+.footer-brand,
+.footer-text,
+.copyright {
     font-size: 1.2rem;
-    /*max-width: 300px;*/
-}
-
-.social-links {
-    margin: 20px 0;
-}
-
-.social-link {
-    color: #ffffff;
-    margin-right: 20px;
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
-}
-
-.social-link:hover {
-    color: #670000;
 }
 
 .footer-links {
@@ -202,16 +171,26 @@ body.modal-open {
 .footer-links a {
     color: #ffffff;
     text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover,
+.social-link:hover {
+    color: #670000;
+}
+
+.social-links {
+    margin: 20px 0;
+}
+
+.social-link {
+    color: #ffffff;
+    margin-right: 20px;
     font-size: 1.2rem;
     transition: color 0.3s ease;
 }
 
-.footer-links a:hover {
-    color: #670000;
-}
-
 .copyright {
-    color: #ffffff;
     font-size: 1rem;
     margin-top: 20px;
     padding-top: 20px;
