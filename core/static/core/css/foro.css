@@ -4,6 +4,11 @@ html, body {
     font-weight: 500;
     font-style: normal;
     letter-spacing: 0.05em;
+    background-image: url("../img/home/fondop.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
     margin: 0;
 }
 
@@ -58,13 +63,12 @@ html, body {
 }
 
 h5 {
-    color: white;
+    color: #cb4242;
     text-align: center;
     margin-top: 20px;
-    font-size: 35px;
+    font-size: 60px;
     margin-top: 100px;
 }
-
 
 #fuente {
     color: var(--rojo);
@@ -77,7 +81,7 @@ h5 {
 }
 
 .comentarios {
-    margin: 20px 0;
+    margin: 30px 0;
 }
 
 .form_comentarios textarea {
@@ -95,15 +99,17 @@ h5 {
 }
 
 .form_comentarios .btn {
-    background: linear-gradient(90deg, #024605, #031f0e, #020803);
-    border: 1px solid gold;
-    border-radius: 0;
-    color: #E0C066;
-    margin-bottom: 20px;
+    background-color: #d24e4e;
+    color: white;
+    padding: 10px 20px;      /* Aumenta tamaño interno */
+    font-size: 1.4rem;      /* Aumenta el tamaño de letra */
+    border-radius: 8px;      /* Hace esquinas más redondeadas */
+    border: none;
+    transition: background-color 0.3s ease;
 }
 
 .form_comentarios .btn:hover {
-    box-shadow: 0px 0px 9px rgb(28, 219, 108);
+    box-shadow: 0px 0px 9px rgb(219, 28, 28);
 
 }
 
@@ -117,13 +123,13 @@ h5 {
 }
 
 .media .nombre {
-    color: #E0C066;
+    color: #5e0000;
     margin-bottom: 0;
 }
 
 .media .nombre span {
     font-size: 12px;
-    color: #E0C066;
+    color: #5e0000;
     margin-left: 10px;
 
 }
@@ -145,18 +151,9 @@ h5 {
 }
 
 img {
-    width: 64px;
-    height: 64px;
+    width: 100px;
+    height: 100px;
 
-}
-
-
-#fondo1 {
-    background-color: rgb(17, 6, 1);
-    background-position: top;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 /* 
@@ -497,7 +494,7 @@ img {
 
 /* Color de la fecha y hora de las publicaciones */
 .text-muted {
-    color: #1d62ff !important;
+    color: #343333 !important;
 }
 
 /* Transicion para el dropdown de los comentarios */
@@ -511,15 +508,17 @@ button[aria-expanded="true"] .fa-chevron-down {
 
 /* Ajustes para los hover de los botones */
 .reply-btn {
+    background-color: #8cdca1;
   transition: background-color .2s, border-color .2s;
 }
 .reply-btn:hover {
-  background-color: #1d7731;    /* verde más oscuro */
-  border-color: #165d26;
+  background-color: darkgreen;    /* verde más oscuro */
+  border-color: #4d7e59;
 }
 
 .edit-btn {
-  transition: background-color .2s, border-color .2s;
+    background-color: #a7d4f3;
+    transition: background-color .2s, border-color .2s;
 }
 .edit-btn:hover {
   background-color: #0057b6;    /* azul más oscuro */
@@ -527,9 +526,10 @@ button[aria-expanded="true"] .fa-chevron-down {
 }
 
 .delete-btn {
+    background-color: #ff850e;
   transition: background-color .2s, border-color .2s;
 }
 .delete-btn:hover {
-  background-color: #941b26;
+  background-color: #ff410f;
   border-color: #70131a;
 }

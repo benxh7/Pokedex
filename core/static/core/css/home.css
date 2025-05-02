@@ -10,7 +10,7 @@ html, body {
     font-style: normal;
     letter-spacing: 0.05em;
     background-color: #ffffff;
-    background-image: url("../img/home/fondop.jpg"); /* Ajusta la ruta si es necesario */
+    background-image: url("../img/home/fondop.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

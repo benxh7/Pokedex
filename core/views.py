@@ -143,7 +143,7 @@ def post_view(request):
         nuevo = form.save(commit=False)
         nuevo.usuario = request.user
         nuevo.save()
-        return redirect('foro')
+        return redirect('post')
 
     return render(request, 'core/post_comunidad.html', {
         'comentarios': comentarios,
