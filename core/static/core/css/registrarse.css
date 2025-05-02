@@ -125,6 +125,10 @@ body.modal-open {
     font-size: 0.9rem;
 }
 
+.registerForm button a:hover {
+    color: gold;
+}
+
 /* ====================
    SCROLLBAR PERSONALIZADO
 ==================== */
