@@ -38,7 +38,7 @@
             <li class="menu"><a href="{% url 'home' %}">Inicio</a></li>
             <li class="menu"><a href="{% url 'external_posts' %}">Comunidad</a></li>
             <li class="menu"><a href="{% url 'foro' %}">Foro</a></li>
-            <li class="menu"><a href="{% url 'pokedex' %}">Pokedex</a></li>
+            <li class="menu"><a href="{% url 'pokemons' %}">Pokédex</a></li>
             <!-- Si inicio sesion el usuario mostraremos las siguientes categorias -->
             {% if user.is_authenticated %}
                 <li class="menu">

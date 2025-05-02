@@ -35,7 +35,7 @@
             <li class="menu"><a href="{% url 'home' %}">Inicio</a></li>
             <li class="menu"><a href="{% url 'external_posts' %}">Comunidad</a></li>
             <li class="menu"><a href="{% url 'foro' %}">Foro</a></li>
-            <li class="menu"><a href="{% url 'pokedex' %}">Pokedex</a></li>
+            <li class="menu"><a href="{% url 'pokemons' %}">Pokédex</a></li>
             <!-- Si inicio sesion el usuario mostraremos las siguientes categorias -->
             {% if user.is_authenticated %}
                 <li class="menu">
@@ -67,12 +67,12 @@
 <div class="body-content container-fluid">
     <div class="row">
         <!-- Imagen de fondo izquierda -->
-        <div class="col-md-7 d-none d-md-block"
+        <div class="col-lg-7 col-md-7 d-none d-md-block"
              style="background: url('{% static 'core/img/background/Fondo2.jpg' %}') no-repeat center center; background-size: cover; height: 100vh;">
         </div>
         <!-- Formulario de login derecha -->
-        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center"
-             style="min-height:100vh;">
+        <div class="col-lg-5 col-md-5 d-flex align-items-center justify-content-center"
+         style="min-height:100vh;">
 
             <div class="w-70">  <!-- contenedor para logo + formulario -->
                 <!-- LOGO NUEVO -->
