@@ -144,40 +144,73 @@ body.modal-open {
     scrollbar-color: gold transparent;
 }
 
-/* ====================
-   FOOTER
-==================== */
+/*
+================================
+ Diseño del footer de la pagina
+================================
+*/
+
 .footer {
     background: #ef5350;
     padding: 40px 0 20px;
     border-top: 1px solid rgb(47, 9, 9);
     position: relative;
-    color: white;
-    text-align: center;
 }
 
-.footer a {
-    color: #ffe082;
-    text-decoration: none;
+.footer-brand {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    max-width: 320px;
 }
 
-.footer a:hover {
-    color: white;
-    text-decoration: underline;
+.footer-text {
+    color: #ffffff;
+    font-size: 1.2rem;
+    /*max-width: 300px;*/
+}
+
+.social-links {
+    margin: 20px 0;
+}
+
+.social-link {
+    color: #ffffff;
+    margin-right: 20px;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.social-link:hover {
+    color: #670000;
 }
 
 .footer-links {
     display: flex;
-    justify-content: center;
     gap: 20px;
-    list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .footer-links a {
-    font-size: 1.1rem;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2rem;
     transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #670000;
+}
+
+.copyright {
+    color: #ffffff;
+    font-size: 1rem;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(63, 63, 63, 0.466);
 }
 
 /* ==========================
