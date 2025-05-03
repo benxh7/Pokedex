@@ -388,9 +388,9 @@ body.modal-open {
 }
 
 
-/* 
+/*
 ================================
- Diseño del footer de la pagina 
+ Diseño del footer de la pagina
 ================================
 */
 
@@ -427,7 +427,7 @@ body.modal-open {
 }
 
 .social-link:hover {
-    color: #670000;
+    color: gold;
 }
 
 .footer-links {
@@ -446,7 +446,7 @@ body.modal-open {
 }
 
 .footer-links a:hover {
-    color: #670000;
+    color: gold;
 }
 
 .copyright {
