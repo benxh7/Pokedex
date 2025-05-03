@@ -292,7 +292,7 @@ body.modal-open {
     display: none !important;
 }
 
-html, body {
+body {
     height: 100%;
 }
 

@@ -351,7 +351,6 @@ meter::-webkit-meter-even-less-good-value {
 }
 
 .statTypes {
-
     display: flex;
     flex-direction: column;
     justify-content: center;

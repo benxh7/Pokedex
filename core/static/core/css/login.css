@@ -9,7 +9,7 @@ html, body {
     font-weight: 500;
     font-style: normal;
     letter-spacing: 0.05em;
-    background-color: rgb(255,196,70);
+    background-color: rgb(255, 196, 70);
     /*background: linear-gradient(90deg, #013003, #031309, #020703);*/
     margin: 0;
     padding: 0;
@@ -33,14 +33,17 @@ body.modal-open {
     width: 6px;
     height: 6px;
 }
+
 ::-webkit-scrollbar-track {
     background: transparent;
     border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb {
     background: gold;
     border-radius: 10px;
 }
+
 * {
     scrollbar-width: thin;
     scrollbar-color: gold transparent;
@@ -147,6 +150,7 @@ body.modal-open {
     font-size: 1rem;
     transition: all 0.3s ease;
 }
+
 #loginForm button:hover,
 #registerForm button:hover {
     background-color: #d32f2f;
@@ -171,28 +175,34 @@ body.modal-open {
     border-top: 1px solid #300;
     color: #fff;
 }
+
 .footer-links {
     list-style: none;
     display: flex;
     gap: 20px;
     padding: 0;
 }
+
 .footer-links a {
     color: #fff;
     text-decoration: none;
     font-size: 1.2rem;
 }
+
 .footer-links a:hover {
     color: gold;
 }
+
 .social-link {
     color: #fff;
     margin-right: 20px;
     font-size: 1.2rem;
 }
+
 .social-link:hover {
     color: gold;
 }
+
 .copyright {
     margin-top: 20px;
     padding-top: 20px;
@@ -213,13 +223,17 @@ body.modal-open {
         gap: 10px;
     }
 
-    #registerForm {
+    #loginForm {
         padding: 20px;
+    }
+
+    .w-70 {
+        width: 100% !important;
     }
 }
 
 @media (max-width: 576px) {
-    #registerForm h1 {
+    #loginForm h1 {
         font-size: 1.5rem;
     }
 
@@ -232,12 +246,12 @@ body.modal-open {
    CENTRAR TEXTO DEL NAVBAR
 ==================== */
 .navbar ul {
-    justify-content: center;       /* Centra horizontalmente los elementos */
-    text-align: center;            /* Asegura el centrado del texto */
+    justify-content: center; /* Centra horizontalmente los elementos */
+    text-align: center; /* Asegura el centrado del texto */
 }
 
 .navbar ul li {
-    text-align: center;            /* Centra el texto dentro del <li> */
+    text-align: center; /* Centra el texto dentro del <li> */
 }
 
 
@@ -267,7 +281,7 @@ body.modal-open {
     display: none !important;
 }
 
-html, body {
+body {
     height: 100%;
 }
 
@@ -285,7 +299,7 @@ body {
 }
 
 .site-logo {
-    max-width: 240px !important;  /* antes estaba en 180px */
+    max-width: 240px !important; /* antes estaba en 180px */
 }
 
 

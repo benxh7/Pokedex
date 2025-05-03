@@ -355,7 +355,7 @@ body.modal-open {
 .dots {
     position: absolute;
     bottom: 25px;
-    width: 100%; /* Ocupa todo el ancho */
+    width: 100%; /* Ocupa todó el ancho */
     display: flex;
     justify-content: center; /* Centra los puntos */
     gap: 15px;
