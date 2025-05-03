@@ -5,6 +5,11 @@ html, body {
     font-style: normal;
     letter-spacing: 0.05em;
     margin: 0;
+    background-image: url("../img/background/Fondo3.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .page-wrapper {
@@ -539,10 +544,15 @@ button[aria-expanded="true"] .fa-chevron-down {
 }
 
 h2 {
-    color: white;
+    color: #ffffff;
     text-align: center;
     margin-top: 20px;
     font-size: 35px;
+    text-shadow:
+        -1px -1px 0 #d70101,
+         1px -1px 0 black,
+        -1px  1px 0 black,
+         1px  1px 0 #d70101;
 }
 
 .external-posts {
