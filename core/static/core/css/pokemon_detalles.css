@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
+@font-face {
+    font-family: 'PocketMonk';
+    src: url('../fonts/PocketMonk.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -165,7 +172,7 @@
     font-size: 3em;
     font-weight: 800;
     letter-spacing: 5px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'pocketMonk', sans-serif;
     top: 5vh;
     text-align: center;
     z-index: 99;
@@ -175,7 +182,7 @@
     font-size: 2em;
     font-weight: 800;
     letter-spacing: 5px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'pocketMonk', sans-serif;
     top: 5vh;
     text-align: center;
     z-index: 99;
@@ -215,7 +222,7 @@
     font-size: 2.5em;
     font-weight: 800;
     letter-spacing: 5px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'pocketMonk', sans-serif;
     margin-top: 10px;
     margin-bottom: 5px;
 
@@ -353,8 +360,7 @@ meter::-webkit-meter-even-less-good-value {
 }
 
 .statTypes .statTypeText {
-
-
+    font-family: "Jersey 10", sans-serif;
     width: 35%;
     margin-bottom: 1%;
     display: flex;
@@ -485,18 +491,20 @@ meter::-webkit-meter-even-less-good-value {
 
 .evolution {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    align-items: center !important;
-    overflow: scroll;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    justify-items: center;
+    justify-content: center;
     gap: 20px;
     margin-top: 20px;
     padding: 30px;
     font-size: 0.5em;
     font-weight: 600;
+    align-items: center !important;
     text-align: center;
     letter-spacing: 2px;
     text-transform: capitalize;
     border-bottom: 2px solid rgba(207, 207, 207, 0.26);
+    overflow-x: auto;
 }
 
 ::-webkit-scrollbar {
@@ -520,8 +528,7 @@ meter::-webkit-meter-even-less-good-value {
 .evolution__pokemon h1 {
     text-align: center;
     margin-bottom: 30px;
-    font-family: 'Montserrat', sans-serif;
-
+    font-family: 'pocketMonk', sans-serif;
 }
 
 .varieties__pokemon img {
@@ -535,6 +542,8 @@ meter::-webkit-meter-even-less-good-value {
     margin-bottom: 30px;
     font-family: 'Montserrat', sans-serif;
 }
+
+
 
 .varieties {
     display: grid;
@@ -673,7 +682,6 @@ meter::-webkit-meter-even-less-good-value {
     right: 0;
 }
 
-/* Loaded Styles */
 .loaded .loader-wrapper .loader-section.section-left {
     transform: translateX(-100%);
     transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
@@ -697,5 +705,118 @@ meter::-webkit-meter-even-less-good-value {
 
 .statIconHolder {
 
+
+}
+
+@media (max-width: 600px) {
+
+    .previousBtn, .nextBtn {
+        width: 32px;
+        height: 32px;
+        top: 8px;
+    }
+
+    .previousBtn {
+        left: 8px;
+    }
+
+    .nextBtn {
+        right: 8px;
+    }
+
+    .name {
+        font-size: 2.2em;
+    }
+
+    .japaneseName {
+        font-size: 1.4em;
+    }
+
+    .details {
+        margin-top: 12px;
+        border-radius: 28px 28px 0 0;
+        padding-top: 5px;
+    }
+
+    .tabs {
+        position: static;
+        padding: 40px 0;
+        margin: 0;
+        font-size: .87rem;
+        justify-content: space-around;
+        width: 100%;
+        letter-spacing: 2px;
+    }
+
+    .tabs span {
+        padding: 6px;
+    }
+
+    .overview p {
+        padding: 16px 14px;
+        font-size: .95em;
+    }
+
+    .heightWeight {
+        font-size: 1em;
+        padding: 6px 24px;
+    }
+
+    .stats {
+        padding: 0 16px;
+    }
+
+    .stats .stat {
+        flex-direction: column;
+        align-items: flex-start;
+
+        margin-block: 10px;
+    }
+
+    .stats meter {
+        width: 100%;
+    }
+
+    .evolution {
+        display: flex;
+        flex-direction: column;
+        align-items: center !important;
+        gap: 24px;
+        padding: 20px 16px;
+        overflow-x: hidden;
+        border-bottom: 0;
+    }
+
+    .evolution__pokemon img {
+        width: 160px;
+        height: 160px;
+    }
+
+    .evolution i.fa-caret-right {
+        transform: rotate(90deg);
+    }
+
+    .varieties {
+        grid-template-columns:1fr;
+        justify-items: center;
+        padding: 20px;
+        gap: 32px;
+    }
+
+    .varieties__pokemon img {
+        width: 220px;
+        height: 220px;
+    }
+
+    .poke__type__bg {
+        width: 32px;
+        height: 32px;
+        margin: 6px;
+    }
+
+    .poke__type__bg img {
+        width: 16px;
+        height: 16px;
+    }
 
 }
