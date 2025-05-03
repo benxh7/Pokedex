@@ -530,3 +530,84 @@ body.modal-open {
         flex: 1;
     }
 }
+
+
+#loginForm {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    color: #333;
+    width: 100%;
+    max-width: 420px;
+    font-family: 'Josefin Sans', sans-serif;
+    margin: 0 auto;
+}
+
+#loginForm h1 {
+    color: #ef5350;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-family: 'Chewy', cursive;
+}
+
+#loginForm label {
+    font-weight: 600;
+    color: #ef5350;
+    font-size: 0.95rem;
+    display: block;
+    margin-bottom: 6px;
+}
+
+#loginForm input[type="text"],
+#loginForm input[type="password"] {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+#loginForm .form-check-label,
+#loginForm .text-muted {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+#loginForm button[type="submit"] {
+    background-color: #ef5350;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+    padding: 12px;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-family: 'Chewy', cursive;
+    font-size: 1rem;
+}
+
+#loginForm button[type="submit"]:hover {
+    background-color: #d32f2f;
+    color: gold;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    #loginForm {
+        padding: 20px;
+    }
+
+    #loginForm h1 {
+        font-size: 1.5rem;
+    }
+
+    #loginForm button[type="submit"] {
+        font-size: 0.95rem;
+    }
+}
