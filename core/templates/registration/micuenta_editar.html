@@ -52,7 +52,7 @@
                             <a href="{% url 'ver_cuentas_api' %}">Administrar Cuentas</a>
                         </li>
                     {% endif %}
-                <li class="menu" style="color: #ffc400">
+                <li class="menu" style="color: gold">
                     <span>Bienvenido, {{ user.username }}</span>
                 </li>
             {% else %}
@@ -63,14 +63,13 @@
     </div>
 </nav>
 
-<div class="background-overlay"></div>
 <div class="page-wrapper">
     <h1>Actualizar Perfil</h1>
     <div class="form-container">
         <form method="POST" action="">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <button type="submit" class="btn btn-danger">Guardar Cambios</button>
         </form>
 
         <!-- Enlace para cambiar contraseña (ver sección siguiente) -->

@@ -13,7 +13,7 @@ html, body {
 }
 
 #fondo {
-    background-image: url('../img/background/Fondo.jpg');
+    background-image: url('../img/background/Fondo4.png');
     background-size: cover;
     background-attachment: fixed;
     min-height: 80vh;
@@ -57,7 +57,8 @@ h1 {
     text-align: center;
     margin-top: 150px;
     font-size: 3rem;
-    color: #ffc400;
+    color: #ffffff;
+
 }
 
 /*
@@ -388,14 +389,14 @@ h1 {
     max-width: 600px;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro semitransparente */
     border-radius: 0.5rem;
     text-align: left;
 }
 
 form {
     margin-bottom: 1rem;
-    color: gold;
+    color: rgb(255,196,70);
 }
 
 
@@ -403,8 +404,8 @@ form {
     display: inline-block;
     margin-top: 1rem;
     font-weight: bold;
-    color: gold;
-    text-decoration: none;
+    color: #ffffff;
+    text-decoration:blink;
 }
 
 .form-container a:hover {
