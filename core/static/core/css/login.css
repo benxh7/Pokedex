@@ -159,6 +159,7 @@ body.modal-open {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* checkbox */
 .form-check-label, .text-muted {
     font-size: 0.9rem;
     padding: 3px;

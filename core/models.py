@@ -27,6 +27,7 @@ class Usuario(models.Model):
     )
 
     # Definimos el modelo de usuario como el modelo por defecto
+    # como email y username
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
