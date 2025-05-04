@@ -544,15 +544,11 @@ button[aria-expanded="true"] .fa-chevron-down {
 }
 
 h2 {
-    color: #ffffff;
+    color: rgba(0, 0, 0, 0.75);
     text-align: center;
     margin-top: 20px;
-    font-size: 35px;
-    text-shadow:
-        -1px -1px 0 #d70101,
-         1px -1px 0 black,
-        -1px  1px 0 black,
-         1px  1px 0 #d70101;
+    font-size: 38px;
+    font-weight: bold;
 }
 
 .external-posts {
@@ -561,8 +557,8 @@ h2 {
 
 .external-post-item {
     display: flex;
-    background-color: rgba(0, 0, 0, 0.83);
-    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.6);
+    color: #000000;
     border-radius: 0.5rem;
     padding: 1rem;
     box-sizing: border-box;
@@ -582,10 +578,10 @@ h2 {
 .external-post-item:hover,
 .external-post-item:focus {
     transform: translateY(-3px);
-    box-shadow: 0 0 0 1px rgba(243, 196, 50, 0.2),
-    0 6px 12px rgba(0, 0, 0, 0.4);
-    background-color: #23272a;
-    color: #ffc107;
+    box-shadow: 0 0 0 1px rgb(94, 0, 0),
+    0 6px 12px rgba(0, 0, 0, 0.62);
+    background-color: rgba(35, 39, 42, 0.75);
+    color: #ffffff;
 }
 
 .external-post-item h5 {
