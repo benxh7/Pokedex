@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import UserManager
@@ -19,14 +20,19 @@ class Usuario(models.Model):
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(auto_now_add=True)
+    last_login = models.DateTimeField(null=True, blank=True)
     imagen = models.ImageField(
         upload_to='fotos_perfil', null=True, blank=True,
         default=DEFAULT_USER_IMAGE
     )
 
     # Definimos el modelo de usuario como el modelo por defecto
+    EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
+
+    # Definimos el manager para el modelo de usuario
+    objects = UserManager()
 
     # Eliminamos espacios al inicio o al final de los nombres
     @classmethod
@@ -37,18 +43,35 @@ class Usuario(models.Model):
     is_anonymous = False
     is_authenticated = True
 
-    # Definimos el manager para el modelo de usuario
-    objects = UserManager()
-
     # Generamos y guardamos el hash de la contraseña
     # esto para evitar guardar la contraseña sin encriptar
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
 
+    def set_unusable_password(self):
+        """
+        Marca la contraseña como no usable (no permitir login con contraseña).
+        """
+        self.password = make_password(None)
+
+    def has_usable_password(self):
+        """
+        Devuelve True si la contraseña no está marcada como 'no usable'.
+        """
+        return self.password is not None and not self.password.startswith('!')
+
     # Verificamos si el raw_password coincide con el primer hash
     # que ya almacenamos en la base de datos arriba
     def check_password(self, raw_password):
         return check_password(raw_password, self.password)
+
+    @classmethod
+    def get_email_field_name(cls):
+        return cls.EMAIL_FIELD
+
+    # Simula el envio de un correo electronico al usuario
+    def email_user(self, subject, message, from_email=None, **kwargs):
+        send_mail(subject, message, from_email, [self.email], **kwargs)
 
     # Ahora definimos la presentacion unica neutral por nombre de usuario
     def natural_key(self):
@@ -65,6 +88,7 @@ class Usuario(models.Model):
     # El nombre de usuario
     def __str__(self):
         return self.username
+
 
 class AuthToken(models.Model):
     key = models.CharField(max_length=40, primary_key=True, editable=False)

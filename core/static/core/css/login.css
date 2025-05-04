@@ -161,6 +161,7 @@ body.modal-open {
 
 .form-check-label, .text-muted {
     font-size: 0.9rem;
+    padding: 3px;
     color: #555;
 }
 
@@ -208,6 +209,10 @@ body.modal-open {
     padding-top: 20px;
     font-size: 1rem;
     border-top: 1px solid rgba(63, 63, 63, 0.4);
+}
+
+#showPassword.form-check-input {
+    width: 10px;
 }
 
 /* ==========================
