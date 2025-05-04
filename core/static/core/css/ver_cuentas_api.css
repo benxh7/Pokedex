@@ -539,7 +539,7 @@ button[aria-expanded="true"] .fa-chevron-down {
 }
 
 h2 {
-    color: #E0C066;
+    color: rgb(255,196,70);
     text-align: center;
     margin-top: 50px;
     font-size: 35px;
@@ -548,26 +548,28 @@ h2 {
 .table-custom {
     width: 100%;
     border-collapse: separate;
-    border: 2px solid #ffc400;
+    border: 2px solid #ffffff;
     border-spacing: 0;
 }
 
 .table-custom thead th {
-    background-color: #0b0f0c;
-    color: #ffc400;
+    background-color: rgba(52, 51, 51, 0.7); /* Color con opacidad */
+    color: #ffffff;
     border-bottom: none;
     padding: .75rem 1rem;
     font-weight: bold;
 }
 
 .table-custom:has(tbody tr) thead th {
-    border-bottom: 2px dashed #ffc400;
+    border-bottom: 2px dashed #ffffff;
 }
 
 .table-custom tbody tr {
-    background-color: #111712;
-    color: rgb(255, 255, 255);
-    transition: background-color .2s;
+    background-color: rgba(52, 51, 51, 0.7); /* Color con opacidad */
+    color: #ffffff;
+    border-bottom: none;
+    padding: .75rem 1rem;
+    font-weight: bold;
 }
 
 .table-custom tbody tr:hover {
