@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Usuario, AuthToken
+from .models import Usuario, Comentario, AuthToken
 
 class RegistroAdmin(admin.ModelAdmin):
     list_display = ('username', 'email',)
@@ -7,3 +7,4 @@ class RegistroAdmin(admin.ModelAdmin):
 
 admin.site.register(Usuario, RegistroAdmin)
 admin.site.register(AuthToken)
+admin.site.register(Comentario)

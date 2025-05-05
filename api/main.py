@@ -28,6 +28,7 @@ TOKEN_TTL_MINUTES = 60
 # Configuración de la autenticacion esto lee token
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+
 # Verificamos credenciales enviadas al endpoint /token
 # Esta definicion devuelve una instancia de Usuario, solamente si
 # el nombre existe en la DB y si la contraseña coincide.
@@ -92,11 +93,13 @@ def login(form: OAuth2PasswordRequestForm = Depends()):
     return {"access_token": token.key, "token_type": "bearer",
             "expires_in": TOKEN_TTL_MINUTES * 60}
 
+
 @app.delete("/token", status_code=204)
 def logout(token: str = Depends(oauth2_scheme),
            current: Usuario = Depends(get_current_user)):
     AuthToken.objects.filter(pk=token, user=current).delete()
     return Response(status_code=204)
+
 
 # ENDPOINTS PUBLICOS
 @app.get("/ping")
@@ -154,26 +157,29 @@ def get_pokemon(identifier: Union[int, str]):
         sprite=data["sprites"]["front_default"] or ""
     )
 
-# ENDPOINTS PRIVADOS
 
+# ENDPOINTS PRIVADOS
 @app.post("/comentarios/", response_model=CommentaryOut)
-def create_comment(payload: CommentaryIn):
-    User = get_user_model()
-    usuario = User.objects.first()
+def create_comment(payload: CommentaryIn,current: Usuario = Depends(get_current_user)):
     c = Comentario.objects.create(
         content=payload.content,
         parent_id=payload.parent,
-        usuario=usuario
+        usuario=current
     )
     return serialize_comment(c)
 
 
 @app.put("/comentarios/{pk}/", response_model=CommentaryOut)
-def update_comment(pk: int, payload: CommentaryIn):
+def update_comment(pk: int,payload: CommentaryIn,current: Usuario = Depends(get_current_user)):
     try:
         c = Comentario.objects.get(pk=pk)
     except Comentario.DoesNotExist:
-        raise HTTPException(status_code=404, detail="Comentario no encontrado")
+        raise HTTPException(404, "Comentario no encontrado")
+
+    # Solo permite que el autor o el superuser editen el comentario
+    if c.usuario != current and not current.is_superuser:
+        raise HTTPException(403, "No tienes permiso para editar este comentario")
+
     c.content = payload.content
     c.parent_id = payload.parent
     c.save()
@@ -181,9 +187,15 @@ def update_comment(pk: int, payload: CommentaryIn):
 
 
 @app.delete("/comentarios/{pk}/", status_code=204)
-def delete_comment(pk: int):
+def delete_comment(pk: int, current: Usuario = Depends(get_current_user)):
     try:
-        Comentario.objects.get(pk=pk).delete()
+        c = Comentario.objects.get(pk=pk)
     except Comentario.DoesNotExist:
-        raise HTTPException(status_code=404, detail="Comentario no encontrado")
+        raise HTTPException(404, "Comentario no encontrado")
+
+    # Solo permite que el autor o el superuser borren el comentario
+    if c.usuario != current and not current.is_superuser:
+        raise HTTPException(403, "No tienes permiso para borrar este comentario")
+
+    c.delete()
     return Response(status_code=204)

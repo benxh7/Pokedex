@@ -10,7 +10,6 @@ import secrets
 
 DEFAULT_USER_IMAGE = 'default/user.png'
 
-
 class Usuario(models.Model):
     # Definimos el modelo de usuario con sus datos
     username = models.CharField(max_length=150, unique=True)
@@ -50,15 +49,9 @@ class Usuario(models.Model):
         self.password = make_password(raw_password)
 
     def set_unusable_password(self):
-        """
-        Marca la contraseña como no usable (no permitir login con contraseña).
-        """
         self.password = make_password(None)
 
     def has_usable_password(self):
-        """
-        Devuelve True si la contraseña no está marcada como 'no usable'.
-        """
         return self.password is not None and not self.password.startswith('!')
 
     # Verificamos si el raw_password coincide con el primer hash

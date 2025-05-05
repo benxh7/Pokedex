@@ -44,15 +44,11 @@ Usar Git para colaborar en equipo, centralizando el código en un repositorio co
 
 Documentar y subir todo el desarrollo grupal al repositorio correspondiente.
 
----------------------------------------------------------------------------------------------------------------------------------------
+Una vez implementado el proyecto instala las dependencias necesarias con el siguiente comando:
 
-📦 Archivos Entregados:
-
-El cliente entregó los siguientes recursos para facilitar la implementación:
-
-Wiki-the_forestt.rar: Contiene la página web construida en FrontEnd (HTML, CSS, JS, imágenes).
-
-Capturas de pantalla de referencia visual para asegurar la fidelidad de la migración.
+```bash
+pip install -r requirements.txt
+```
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
