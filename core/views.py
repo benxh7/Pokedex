@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.contrib.auth import logout, login, update_session_auth_hash, get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import PasswordChangeForm
@@ -54,6 +54,13 @@ def login_view(request):
 
 @login_required
 def mi_cuenta_view(request):
+    if request.method == "POST" and request.POST.get("delete") == "1":
+        user = request.user
+        auth.logout(request)
+        user.delete()
+        messages.success(request, "Tu cuenta ha sido eliminada.")
+        return redirect("home")
+
     # Formulario para cambiar imagen de perfil
     form = AvatarForm(request.POST or None, request.FILES or None, instance=request.user)
 
@@ -101,7 +108,7 @@ def cambiar_contraseña_view(request):
 
     return render(request, 'registration/cambiar_contraseña.html', {'form': form})
 
-
+@login_required
 def logout_view(request):
     logout(request)  # Cierra la sesión
     return redirect('core/home')
